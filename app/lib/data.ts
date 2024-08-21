@@ -4,6 +4,8 @@ import {
   CustomersTableType,
   InvoiceForm,
   InvoicesTable,
+  BillsTable,
+  BillForm,
   LatestInvoiceRaw,
   Revenue,
 } from './definitions';
@@ -14,12 +16,12 @@ export async function fetchRevenue() {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
 
-    console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // console.log('Fetching revenue data...');
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    console.log('Data fetch completed after 3 seconds.');
+    // console.log('Data fetch completed after 3 seconds.');
 
     return data.rows;
   } catch (error) {
@@ -85,7 +87,7 @@ export async function fetchCardData() {
   }
 }
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 10;
 export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
@@ -167,6 +169,84 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
+export async function fetchFilteredBills(
+  year: number,
+  month: number,
+  currentPage: number,
+) {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const bills = await sql<BillsTable>`
+      SELECT
+        bills.id,
+        bills.user_id,
+        users.name AS user_name,
+        bills.title,
+        bills.value,
+        bills.label,
+        bills.date
+      FROM bills
+      JOIN users ON bills.user_id = users.id
+      WHERE
+        bills.date >= ${`${year}-${month}-01`}
+        AND bills.date < ${`${year}-${(month+1)%12}-01`}
+      ORDER BY bills.date DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return bills.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch bills.');
+  }
+}
+
+export async function fetchBillsPages(year: number, month: number) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM bills
+    WHERE
+        bills.date >= ${`${year}-${month}-01`}
+        AND bills.date < ${`${year}-${(month+1)%12}-01`}
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of bills.');
+  }
+}
+
+export async function fetchBillById(id: string) {
+  try {
+    const data = await sql<BillForm>`
+      SELECT
+        bills.id,
+        bills.user_id,
+        bills.title,
+        bills.value,
+        bills.label,
+        bills.date
+      FROM bills
+      WHERE bills.id = ${id};
+    `;
+
+    const bill = data.rows.map((bill) => ({
+      ...bill,
+      // Convert amount from cents to dollars
+      value: bill.value / 100,
+    }));
+
+    return bill[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch bill.');
+  }
+}
+
 export async function fetchCustomers() {
   try {
     const data = await sql<CustomerField>`
@@ -215,5 +295,23 @@ export async function fetchFilteredCustomers(query: string) {
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch customer table.');
+  }
+}
+
+export async function fetchUsers() {
+  try {
+    const data = await sql<CustomerField>`
+      SELECT
+        id,
+        name
+      FROM users
+      ORDER BY name ASC
+    `;
+
+    const users = data.rows;
+    return users;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all users.');
   }
 }

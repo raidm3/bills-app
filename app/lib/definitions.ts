@@ -31,6 +31,15 @@ export type Revenue = {
   revenue: number;
 };
 
+export type Bill = {
+  id: string;
+  user_id: string;
+  title: string;
+  value: number;
+  label: 'food' | 'dinner' | 'misc';
+  date: string;
+};
+
 export type LatestInvoice = {
   id: string;
   name: string;
@@ -53,6 +62,16 @@ export type InvoicesTable = {
   date: string;
   amount: number;
   status: 'pending' | 'paid';
+};
+
+export type BillsTable = {
+  id: string;
+  user_id: string;
+  user_name: string;
+  title: string;
+  value: number;
+  label: string;
+  date: string;
 };
 
 export type CustomersTableType = {
@@ -86,3 +105,16 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+export type BillForm = {
+  id: string;
+  user_id: string,
+  title: string;
+  value: number;
+  label: 'food' | 'dinner' | 'misc';
+};
+
+export type UserField = {
+  id: string;
+  name: string;
+}
