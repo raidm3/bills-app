@@ -1,11 +1,16 @@
-import { BanknotesIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 export default function BillsLogo() {
   return (
     <div
       className="flex flex-row items-center leading-none text-white"
     >
-      <BanknotesIcon className="h-12 w-12 rotate-[15deg]" />
+      <Image
+        src="/icons/money-bag.svg"
+        width={32}
+        height={32}
+        alt="logo"
+      />
       <p className="text-[44px] ms-2">Bills</p>
     </div>
   );

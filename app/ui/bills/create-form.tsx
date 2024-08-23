@@ -196,7 +196,7 @@ export default function CreateBillForm({
         >
           Zurück
         </Link>
-        <Button type="submit">Speichern</Button>
+        <Button className="bg-primary" type="submit">Speichern</Button>
       </div>
     </form>
   );

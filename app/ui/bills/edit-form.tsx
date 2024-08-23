@@ -202,7 +202,7 @@ export default function EditBillForm({
               e.preventDefault();
               await deleteBillWithId(bill.id);
             }}
-            className="flex items-center rounded-md p-2 bg-red-600 text-white text-sm"
+            className="flex items-center rounded-md p-2 bg-danger text-white text-sm"
           >
             <div className="w-4">
               <TrashIcon />
@@ -216,7 +216,7 @@ export default function EditBillForm({
             >
               Zurück
             </Link>
-            <Button type="submit">Speichern</Button>
+            <Button className="bg-primary" type="submit">Speichern</Button>
           </div>
         </div>
       </form>

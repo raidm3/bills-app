@@ -9,7 +9,6 @@ import { BillPerUserAndMonth, MonthlyBillsPerUser } from '@/app/lib/definitions'
 export default async function BillDiffs() {
   const bills = await fetchBillsDiffPerUser();
   const users = await fetchUsers();
-  console.log(users);
 
   if (!bills || bills.length === 0) {
     return <p className="mt-4 text-gray-400">No data available.</p>;

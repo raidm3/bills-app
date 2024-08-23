@@ -29,7 +29,7 @@ export default function MonthlyBillsChart({ data }: { data: MonthlyBills[] }) {
           data={data}
           index="month"
           categories={['food', 'dinner']}
-          colors={['#14c944', '#db143c']}
+          colors={['#16a34a', '#ef4444']}
           yAxisWidth={52}
           showAnimation={true}
           valueFormatter={dataFormatter}
