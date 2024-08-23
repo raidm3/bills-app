@@ -1,7 +1,7 @@
 {
   "name": "Bills",
   "short_name": "Bills",
-  "theme_color": "#2589FE",
+  "theme_color": "#0070F3",
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",

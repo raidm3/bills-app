@@ -11,7 +11,7 @@ export default function BillsLogo() {
         height={32}
         alt="logo"
       />
-      <p className="text-[44px] ms-2">Bills</p>
+      <p className="text-[28px] ms-2">Bills</p>
     </div>
   );
 }
