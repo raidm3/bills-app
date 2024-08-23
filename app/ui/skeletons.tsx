@@ -7,12 +7,20 @@ export function CardSkeleton() {
     <div
       className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
     >
-      <div className="flex p-4">
-        <div className="h-5 w-5 rounded-md bg-gray-200" />
-        <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium" />
-      </div>
-      <div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
-        <div className="h-7 w-20 rounded-md bg-gray-200" />
+      <div className="m-2 h-6 w-60 rounded-md bg-gray-200 font-medium p-2" />
+      <div className="grid grid-cols-3 gap-4 rounded-xl bg-white px-4 py-8 text-center">
+        <div className="flex flex-col items-center">
+          <div className="h-6 w-6 rounded-md bg-gray-200 mb-2"></div>
+          <div className="h-6 w-20 rounded-md bg-gray-200"></div>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="h-6 w-6 rounded-md bg-gray-200 mb-2"></div>
+          <div className="h-6 w-20 rounded-md bg-gray-200"></div>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="h-6 w-6 rounded-md bg-gray-200 mb-2"></div>
+          <div className="h-6 w-20 rounded-md bg-gray-200"></div>
+        </div>
       </div>
     </div>
   );
@@ -22,14 +30,14 @@ export function CardsSkeleton() {
   return (
     <>
       <CardSkeleton />
+      {/* <CardSkeleton />
       <CardSkeleton />
-      <CardSkeleton />
-      <CardSkeleton />
+      <CardSkeleton /> */}
     </>
   );
 }
 
-export function RevenueChartSkeleton() {
+export function MonthlyBillsChartSkeleton() {
   return (
     <div className={`${shimmer} relative w-full overflow-hidden md:col-span-4`}>
       <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
@@ -89,13 +97,10 @@ export default function DashboardSkeleton() {
         className={`${shimmer} relative mb-4 h-8 w-36 overflow-hidden rounded-md bg-gray-100`}
       />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <CardSkeleton />
-        <CardSkeleton />
-        <CardSkeleton />
-        <CardSkeleton />
+        <CardsSkeleton />
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <RevenueChartSkeleton />
+        <MonthlyBillsChartSkeleton />
         <LatestInvoicesSkeleton />
       </div>
     </>
@@ -218,23 +223,15 @@ export function InvoicesTableSkeleton() {
 
 export function BillsMobileSkeleton() {
   return (
-    <div className="mb-2 w-full rounded-md bg-white p-4">
-      <div className="flex items-center justify-between border-b border-gray-100 pb-4">
-        <div className="flex items-center">
-          <div className="h-6 w-16 rounded bg-gray-100"></div>
+    <div className="mb-2 w-full rounded-md bg-white p-3">
+      <div className="flex justify-between">
+        <div className="flex flex-row">
+          <div className="h-6 w-6 rounded-md bg-gray-200"></div>
+          <div className="h-6 w-20 rounded-md bg-gray-200 font-medium ms-2"></div>
         </div>
-        <div className="h-6 w-16 rounded bg-gray-100"></div>
+        <div className="h-6 w-16 rounded bg-gray-100 font-medium"></div>
       </div>
-      <div className="flex w-full items-center justify-between pt-4">
-        <div>
-          <div className="h-6 w-16 rounded bg-gray-100"></div>
-          <div className="mt-2 h-6 w-24 rounded bg-gray-100"></div>
-        </div>
-        <div className="flex justify-end gap-2">
-          <div className="h-10 w-10 rounded bg-gray-100"></div>
-          <div className="h-10 w-10 rounded bg-gray-100"></div>
-        </div>
-      </div>
+      <div className="h-4 w-20 rounded-md bg-gray-200 font-medium text-xs mt-1"></div>
     </div>
   );
 }
@@ -287,6 +284,26 @@ export function BillsTableSkeleton() {
               <TableRowSkeleton />
             </tbody>
           </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function BillsPageSkeleton() {
+  return (
+    <div className={`${shimmer} w-full overflow-hidden rounded-md`}>
+      <div className="flex items-center justify-between gap-2 md:mt-8">
+        <div className="m-0">
+          <div className="relative inline-block rounded-lg w-24 h-10 bg-gray-100 d-block me-4"></div>
+          <div className="relative inline-block rounded-lg w-24 h-10 bg-gray-100 d-block"></div>
+        </div>
+        <div className="flex h-10 w-12 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium"></div>
+      </div>
+      <BillsTableSkeleton />
+      <div className="mt-5 flex w-full justify-center">
+        <div className="inline-flex">
+          <div className="w-12 h-10 rounded-lg bg-gray-100"></div>
         </div>
       </div>
     </div>

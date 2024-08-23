@@ -6,7 +6,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 export default function DatePicker() {
-  const [year, setYear] = useState<number>(2024);
+  const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth()+1);
 
   const years = Array.from({ length: 10 }, (_, i) => i + 2024);

@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
+import { UserField, InvoiceForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -18,7 +18,7 @@ export default function EditInvoiceForm({
   customers,
 }: {
   invoice: InvoiceForm;
-  customers: CustomerField[];
+  customers: UserField[];
 }) {
   const initialState: State = { message: null, errors: {} };
   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);

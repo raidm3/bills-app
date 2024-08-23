@@ -133,7 +133,7 @@ export async function GET() {
     // await seedCustomers();
     // await seedInvoices();
     // await seedRevenue();
-    await seedBills();
+    // await seedBills();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });

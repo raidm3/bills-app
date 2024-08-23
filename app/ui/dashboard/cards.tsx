@@ -1,36 +1,27 @@
-import {
-  BanknotesIcon,
-  ClockIcon,
-  UserGroupIcon,
-  InboxIcon,
-} from '@heroicons/react/24/outline';
-import { fetchCardData } from '@/app/lib/data';
+import { fetchBillsData } from '@/app/lib/data-bills';
+import Image from 'next/image';
+import AnimatedNumber from '@/app/ui/animated-number';
 
-const iconMap = {
-  collected: BanknotesIcon,
-  customers: UserGroupIcon,
-  pending: ClockIcon,
-  invoices: InboxIcon,
+const iconPath = {
+  food: '/icons/shopping-cart.svg',
+  dinner: 'icons/romantic-dinner.svg',
+  misc: '/icons/coins-stacked.svg',
 };
 
 export default async function CardWrapper() {
   const {
-    numberOfInvoices,
-    numberOfCustomers,
-    totalPaidInvoices,
-    totalPendingInvoices,
-  } = await fetchCardData();
+    totalBillsFood,
+    totalBillsDinner,
+    totalBillsMisc,
+  } = await fetchBillsData();
 
   return (
     <>
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
-      <Card
-        title="Total Customers"
-        value={numberOfCustomers}
-        type="customers"
-      />
+      <CombinedCard title="Aktuelle Ausgaben" values={[
+        { value: totalBillsFood, type: 'food' },
+        { value: totalBillsDinner, type: 'dinner' },
+        { value: totalBillsMisc, type: 'misc' },
+      ]} />
     </>
   );
 }
@@ -41,22 +32,64 @@ export function Card({
   type,
 }: {
   title: string;
-  value: number | string;
-  type: 'invoices' | 'customers' | 'pending' | 'collected';
+  value: number;
+  type: 'food' | 'dinner' | 'misc';
 }) {
-  const Icon = iconMap[type];
-
   return (
     <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
       <div className="flex p-4">
-        {Icon ? <Icon className="h-5 w-5 text-gray-700" /> : null}
-        <h3 className="ml-2 text-sm font-medium">{title}</h3>
+        <Image
+          src={iconPath[type]}
+          width={24}
+          height={24}
+          alt={type}
+        />
+        <h3 className="ml-2 font-medium">{title}</h3>
       </div>
       <p
         className="truncate rounded-xl bg-white px-4 py-8 text-center text-2xl"
       >
-        {value}
+        <AnimatedNumber end={value} duration={1000} />
       </p>
+    </div>
+  );
+}
+
+export function CombinedCard({
+  title,
+  values,
+}: {
+  title: string;
+  values: [
+    { value: number, type: 'food' | 'dinner' | 'misc' },
+    { value: number, type: 'food' | 'dinner' | 'misc' },
+    { value: number, type: 'food' | 'dinner' | 'misc' }
+  ];
+}) {
+  return (
+    <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
+      <h3 className="font-medium p-2">
+        {title} im {new Date().toLocaleDateString('de-DE', { month: 'long' })}
+      </h3>
+      <div className="grid grid-cols-3 gap-4 rounded-xl bg-white px-4 py-8 text-center">
+        {values.map(({ value, type }) => (
+          <div
+            key={`${type}-card-${value}"}`}
+            className="flex flex-col items-center"
+          >
+            <Image
+              src={iconPath[type]}
+              width={24}
+              height={24}
+              alt={type}
+              className="mb-2"
+            />
+            <span className="font-medium text-center text-lg ms-1">
+              <AnimatedNumber end={value} duration={1000} />
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

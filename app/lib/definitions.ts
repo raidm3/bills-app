@@ -94,7 +94,7 @@ export type FormattedCustomersTable = {
   total_paid: string;
 };
 
-export type CustomerField = {
+export type UserField = {
   id: string;
   name: string;
 };
@@ -114,7 +114,29 @@ export type BillForm = {
   label: 'food' | 'dinner' | 'misc';
 };
 
-export type UserField = {
-  id: string;
-  name: string;
-}
+export type MonthlyBills = {
+  month: string;
+  dinner?: number;
+  food?: number;
+  misc?: number;
+};
+
+export type BillPerMonthAndLabel = {
+  month: string;
+  year: number;
+  label: 'food' | 'dinner' | 'misc';
+  total_value: number;
+};
+
+export type MonthlyBillsPerUser = {
+  month: string,
+  year: number;
+  user_id: string;
+  total_value: number;
+};
+
+export type BillPerUserAndMonth = {
+  month: string;
+  user_id: string;
+  total_value: number;
+};

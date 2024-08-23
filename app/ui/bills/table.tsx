@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import { UpdateBill, DeleteBill } from '@/app/ui/bills/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
+import { UpdateBill } from '@/app/ui/bills/buttons';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredBills } from '@/app/lib/data';
+import Link from 'next/link';
 
-export default async function InvoicesTable({
+export default async function BillsTable({
   year,
   month,
   currentPage,
@@ -34,32 +34,32 @@ export default async function InvoicesTable({
               }
 
               return (
-                <div
+                <Link
                   key={bill.id}
-                  className="mb-2 w-full rounded-md bg-white p-4"
+                  href={`/dashboard/bills/${bill.id}/edit`}
                 >
-                  <div className="flex items-center justify-between border-b pb-4">
-                    <p>{bill.title}</p>
-                    <Image
-                      src={iconPath}
-                      width={24}
-                      height={24}
-                      alt={bill.label}
-                    />
-                  </div>
-                  <div className="flex w-full items-center justify-between pt-4">
-                    <div>
-                      <p className="text-xl font-medium">
+                  <div
+                    className="mb-2 w-full rounded-md bg-white p-3"
+                  >
+                    <div className="flex justify-between">
+                      <div className="flex flex-row">
+                        <Image
+                          src={iconPath}
+                          width={18}
+                          height={18}
+                          alt={bill.label}
+                        />
+                        <p className="font-medium ms-2">{bill.title}</p>
+                      </div>
+                      <p className="font-medium">
                         {formatCurrency(bill.value)}
                       </p>
-                      <p>{formatDateToLocal(bill.date)}</p>
                     </div>
-                    <div className="flex justify-end gap-2">
-                      <UpdateBill id={bill.id} />
-                      <DeleteBill id={bill.id} />
-                    </div>
+                    <p className="text-xs mt-1">
+                      {formatDateToLocal(bill.date)}
+                    </p>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </div>
@@ -67,19 +67,19 @@ export default async function InvoicesTable({
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                  Title
+                  Titel
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  User
+                  Person
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Value
+                  Wert
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Date
+                  Datum
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Label
+                  Kategorie
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
@@ -129,7 +129,6 @@ export default async function InvoicesTable({
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex justify-end gap-3">
                         <UpdateBill id={bill.id} />
-                        <DeleteBill id={bill.id} />
                       </div>
                     </td>
                   </tr>

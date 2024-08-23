@@ -7,15 +7,15 @@ import { redirect } from 'next/navigation';
 
 const FormSchema = z.object({
   id: z.string(),
-  title: z.string().min(1, { message: "Bitte einen Title eingeben." }),
+  title: z.string().min(1, { message: "Bitte einen Titel eingeben." }),
   userId: z.string({
-    invalid_type_error: 'Please select a user.',
+    invalid_type_error: 'Bitte eine Person auswählen.',
   }),
   value: z.coerce
     .number()
-    .gt(0, { message: 'Please enter an amount greater than 0€.' }),
+    .gt(0, { message: 'Bitte eine Zahl größer 0€ eingeben.' }),
   label: z.enum(['food', 'dinner', 'misc'], {
-    invalid_type_error: 'Please select a bill label.',
+    invalid_type_error: 'Bitte eine Kategorie auswählen.',
   }),
   date: z.string(),
 });
@@ -114,9 +114,9 @@ export async function updateBill(
 export async function deleteBill(id: string) {
   try {
     await sql`DELETE FROM bills WHERE id = ${id}`;
-    revalidatePath('/dashboard/bills');
-    return { message: 'Deleted Bill.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Bill.' };
   }
+  revalidatePath('/dashboard/bills');
+  redirect('/dashboard/bills');
 }

@@ -1,5 +1,4 @@
-import { deleteBill } from '@/app/lib/actions-bills';
-import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, PlusIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 export function CreateBill() {
@@ -22,18 +21,5 @@ export function UpdateBill({ id }: { id: string }) {
     >
       <PencilIcon className="w-5" />
     </Link>
-  );
-}
-
-export function DeleteBill({ id }: { id: string }) {
-  const deleteBillWithId = deleteBill.bind(null, id);
-
-  return (
-    <form action={deleteBillWithId}>
-      <button type="submit" className="rounded-md border p-3 hover:bg-gray-100">
-        <span className="sr-only">Delete</span>
-        <TrashIcon className="w-4" />
-      </button>
-    </form>
   );
 }

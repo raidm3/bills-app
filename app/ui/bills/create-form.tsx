@@ -26,8 +26,8 @@ export default function CreateBillForm({
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Bill Title */}
         <div className="mb-4">
-          <label htmlFor="title" className="mb-2 block text-sm font-medium">
-            Title
+          <label htmlFor="title" className="mb-2 block text-sm font-medium text-gray-700">
+            Titel
           </label>
           <div className="relative">
             <input
@@ -35,9 +35,8 @@ export default function CreateBillForm({
               name="title"
               type="text"
               placeholder="Enter a title"
-              className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
-            <DocumentTextIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
           </div>
           <div id="customer-error" aria-live="polite" aria-atomic="true">
             {state.errors?.title &&
@@ -51,17 +50,17 @@ export default function CreateBillForm({
 
         {/* Bill User */}
         <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            User
+          <label htmlFor="customer" className="mb-2 block text-sm font-medium text-gray-700">
+            Person
           </label>
           <div className="relative">
             <select
               id="customer"
               name="userId"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             >
               <option value="" disabled>
-                Select a user
+              Bitte eine Person auswählen
               </option>
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
@@ -69,7 +68,6 @@ export default function CreateBillForm({
                 </option>
               ))}
             </select>
-            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
           <div id="customer-error" aria-live="polite" aria-atomic="true">
             {state.errors?.userId &&
@@ -83,8 +81,8 @@ export default function CreateBillForm({
 
         {/* Bill Value */}
         <div className="mb-4">
-          <label htmlFor="value" className="mb-2 block text-sm font-medium">
-            Value
+          <label htmlFor="value" className="mb-2 block text-sm font-medium text-gray-700">
+            Wert
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
@@ -94,9 +92,8 @@ export default function CreateBillForm({
                 type="number"
                 step="0.01"
                 placeholder="Enter € value"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-              <CurrencyEuroIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
           <div id="value-error" aria-live="polite" aria-atomic="true">
@@ -111,8 +108,8 @@ export default function CreateBillForm({
 
         {/* Bill Label */}
         <fieldset>
-          <legend className="mb-2 block text-sm font-medium">
-            Label
+          <legend className="mb-2 block text-sm font-medium text-gray-700">
+            Kategorie
           </legend>
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex flex-col gap-2">
@@ -197,9 +194,9 @@ export default function CreateBillForm({
           href="/dashboard/bills"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
-          Cancel
+          Zurück
         </Link>
-        <Button type="submit">Save</Button>
+        <Button type="submit">Speichern</Button>
       </div>
     </form>
   );

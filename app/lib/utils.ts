@@ -1,4 +1,4 @@
-import { Revenue } from './definitions';
+import { BillPerMonthAndLabel, MonthlyBills } from './definitions';
 
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('de-DE', {
@@ -21,15 +21,15 @@ export const formatDateToLocal = (
   return formatter.format(date);
 };
 
-export const generateYAxis = (revenue: Revenue[]) => {
+export const generateYAxis = (bills: BillPerMonthAndLabel[]) => {
   // Calculate what labels we need to display on the y-axis
   // based on highest record and in 1000s
   const yAxisLabels = [];
-  const highestRecord = Math.max(...revenue.map((month) => month.revenue));
+  const highestRecord = Math.max(...bills.map((month) => month.total_value / 100));
   const topLabel = Math.ceil(highestRecord / 1000) * 1000;
 
-  for (let i = topLabel; i >= 0; i -= 1000) {
-    yAxisLabels.push(`$${i / 1000}K`);
+  for (let i = topLabel; i >= 0; i -= 100) {
+    yAxisLabels.push(i);
   }
 
   return { yAxisLabels, topLabel };
@@ -67,3 +67,17 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+export const aggregateDataByMonth = (data: BillPerMonthAndLabel[]) => {
+  return data.reduce((acc: MonthlyBills[], { month, label, total_value }: BillPerMonthAndLabel) => {
+    const existing = acc.find(item => item.month === month);
+
+    if (existing) {
+      existing[label] = total_value;
+    } else {
+      acc.push({ month, [label]: total_value });
+    }
+
+    return acc;
+  }, []);
+}

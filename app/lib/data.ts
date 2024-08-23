@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
 import {
-  CustomerField,
+  UserField,
   CustomersTableType,
   InvoiceForm,
   InvoicesTable,
@@ -32,7 +32,6 @@ export async function fetchRevenue() {
 
 export async function fetchLatestInvoices() {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
@@ -53,7 +52,6 @@ export async function fetchLatestInvoices() {
 
 export async function fetchCardData() {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
@@ -174,7 +172,6 @@ export async function fetchFilteredBills(
   month: number,
   currentPage: number,
 ) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
@@ -222,6 +219,7 @@ export async function fetchBillsPages(year: number, month: number) {
 
 export async function fetchBillById(id: string) {
   try {
+    await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate network delay
     const data = await sql<BillForm>`
       SELECT
         bills.id,
@@ -249,7 +247,7 @@ export async function fetchBillById(id: string) {
 
 export async function fetchCustomers() {
   try {
-    const data = await sql<CustomerField>`
+    const data = await sql<UserField>`
       SELECT
         id,
         name
@@ -300,7 +298,7 @@ export async function fetchFilteredCustomers(query: string) {
 
 export async function fetchUsers() {
   try {
-    const data = await sql<CustomerField>`
+    const data = await sql<UserField>`
       SELECT
         id,
         name
