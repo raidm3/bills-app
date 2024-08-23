@@ -219,7 +219,7 @@ export async function fetchBillsPages(year: number, month: number) {
 
 export async function fetchBillById(id: string) {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate network delay
+    // await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate network delay
     const data = await sql<BillForm>`
       SELECT
         bills.id,
