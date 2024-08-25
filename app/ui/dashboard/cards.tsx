@@ -8,6 +8,9 @@ const iconPath = {
   misc: '/icons/coins-stacked.svg',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function CardWrapper() {
   const {
     totalBillsFood,

@@ -167,39 +167,6 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
-export async function fetchFilteredBills(
-  year: number,
-  month: number,
-  currentPage: number,
-) {
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
-  try {
-    const bills = await sql<BillsTable>`
-      SELECT
-        bills.id,
-        bills.user_id,
-        users.name AS user_name,
-        bills.title,
-        bills.value,
-        bills.label,
-        bills.date
-      FROM bills
-      JOIN users ON bills.user_id = users.id
-      WHERE
-        bills.date >= ${`${year}-${month}-01`}
-        AND bills.date < ${`${year}-${(month+1)%12}-01`}
-      ORDER BY bills.date DESC
-      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-    `;
-
-    return bills.rows;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch bills.');
-  }
-}
-
 export async function fetchBillsPages(year: number, month: number) {
   try {
     const count = await sql`SELECT COUNT(*)

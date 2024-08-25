@@ -1,11 +1,7 @@
 'use client';
 
 import { UserField } from '@/app/lib/definitions';
-import {
-  DocumentTextIcon,
-  CurrencyEuroIcon,
-  UserCircleIcon,
-} from '@heroicons/react/24/outline';
+import { CurrencyEuroIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
@@ -85,16 +81,15 @@ export default function CreateBillForm({
             Wert
           </label>
           <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="value"
-                name="value"
-                type="number"
-                step="0.01"
-                placeholder="Enter € value"
-                className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              />
-            </div>
+            <input
+              id="value"
+              name="value"
+              type="number"
+              step="0.01"
+              placeholder="Wert in €"
+              className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            />
+            <CurrencyEuroIcon className="pointer-events-none absolute right-3 top-1/2 h-[24px] w-[24px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
           </div>
           <div id="value-error" aria-live="polite" aria-atomic="true">
             {state.errors?.value &&
@@ -196,7 +191,12 @@ export default function CreateBillForm({
         >
           Zurück
         </Link>
-        <Button className="bg-primary" type="submit">Speichern</Button>
+        <Button
+          className="bg-primary disabled:bg-zinc-400"
+          type="submit"
+        >
+          Speichern
+        </Button>
       </div>
     </form>
   );

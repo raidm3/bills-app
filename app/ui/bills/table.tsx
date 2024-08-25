@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { UpdateBill } from '@/app/ui/bills/buttons';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredBills } from '@/app/lib/data';
+import { fetchFilteredBills } from '@/app/lib/data-bills';
 import Link from 'next/link';
 
 export default async function BillsTable({

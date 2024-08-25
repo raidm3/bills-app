@@ -10,6 +10,9 @@ import {
   LatestInvoicesSkeleton,
   CardsSkeleton,
 } from '@/app/ui/skeletons';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
  
 export default async function Page() {
   const billsPerMonth: BillPerMonthAndLabel[] = await fetchBillsPerMonth();

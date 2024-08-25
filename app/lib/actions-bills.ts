@@ -59,8 +59,8 @@ export async function createBill(prevState: State, formData: FormData) {
   // Insert data into the database
   try {
     await sql`
-      INSERT INTO bills (user_id, title, value, label, date)
-      VALUES (${userId}, ${title}, ${valueInCents}, ${label}, ${date})
+      INSERT INTO bills (user_id, title, value, label, date, created_at)
+      VALUES (${userId}, ${title}, ${valueInCents}, ${label}, ${date}, NOW())
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.

@@ -42,63 +42,73 @@ export async function fetchBillsData() {
     };
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch bills data.');
+    throw new Error('Failed to fetchBillsData.');
   }
 }
 
 export async function fetchBillsPerMonth() {
-  const data = await sql`
-    SELECT
-      DATE_TRUNC('month', date) AS month,
-      DATE_TRUNC('year', date) AS year,
-      label,
-      SUM(value) AS total_value
-    FROM bills
-    WHERE label IN ('food', 'dinner')
-      AND date >  CURRENT_DATE - INTERVAL '6 months'
-    GROUP BY month, year, label
-    ORDER BY
-      month DESC, year DESC;
-  `;
+  try {
+    const data = await sql`
+      SELECT
+        DATE_TRUNC('month', date) AS month,
+        DATE_TRUNC('year', date) AS year,
+        label,
+        SUM(value) AS total_value
+      FROM bills
+      WHERE label IN ('food', 'dinner')
+        AND date >  CURRENT_DATE - INTERVAL '6 months'
+      GROUP BY month, year, label
+      ORDER BY
+        month DESC, year DESC;
+    `;
 
-  const options: Intl.DateTimeFormatOptions = {
-    month: 'short',
-  };
-  const formatter = new Intl.DateTimeFormat('de-DE', options);
-
-  return data.rows.map((row) => ({
-    month: formatter.format(row.month),
-    year: row.year.getFullYear(),
-    label: row.label,
-    total_value: +row.total_value / 100 ?? 0,
-  }));
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'short',
+    };
+    const formatter = new Intl.DateTimeFormat('de-DE', options);
+  
+    return data.rows.map((row) => ({
+      month: formatter.format(row.month),
+      year: row.year.getFullYear(),
+      label: row.label,
+      total_value: +row.total_value / 100 ?? 0,
+    }));
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetchBillsPerMonth.');
+  }
 }
 
 export async function fetchBillsDiffPerUser() {
-  const data = await sql`
-    SELECT
-      DATE_TRUNC('month', date) AS month,
-      DATE_TRUNC('year', date) AS year,
-      user_id,
-      SUM(value) AS total_value
-    FROM bills
-    WHERE date >  CURRENT_DATE - INTERVAL '6 months'
-    GROUP BY month, year, user_id
-    ORDER BY
-      month DESC, year DESC;
-  `;
-
-  const options: Intl.DateTimeFormatOptions = {
-    month: 'short',
-  };
-  const formatter = new Intl.DateTimeFormat('de-DE', options);
-
-  return data.rows.map((row) => ({
-    month: formatter.format(row.month),
-    year: row.year.getFullYear(),
-    user_id: row.user_id,
-    total_value: +row.total_value / 100 ?? 0,
-  }));
+  try {
+    const data = await sql`
+      SELECT
+        DATE_TRUNC('month', date) AS month,
+        DATE_TRUNC('year', date) AS year,
+        user_id,
+        SUM(value) AS total_value
+      FROM bills
+      WHERE date >  CURRENT_DATE - INTERVAL '6 months'
+      GROUP BY month, year, user_id
+      ORDER BY
+        month DESC, year DESC;
+    `;
+  
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'short',
+    };
+    const formatter = new Intl.DateTimeFormat('de-DE', options);
+  
+    return data.rows.map((row) => ({
+      month: formatter.format(row.month),
+      year: row.year.getFullYear(),
+      user_id: row.user_id,
+      total_value: +row.total_value / 100 ?? 0,
+    }));
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetchBillsDiffPerUser.');
+  }
 }
 
 export async function fetchFilteredBills(
@@ -118,19 +128,20 @@ export async function fetchFilteredBills(
         bills.title,
         bills.value,
         bills.label,
-        bills.date
+        bills.date,
+        bills.created_at
       FROM bills
       JOIN users ON bills.user_id = users.id
       WHERE
         bills.date >= ${`${year}-${month}-01`}
         AND bills.date < ${`${year}-${(month+1)%12}-01`}
-      ORDER BY bills.date DESC
+      ORDER BY bills.created_at DESC
       LIMIT ${itemsPerPage} OFFSET ${offset}
     `;
 
     return bills.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch bills.');
+    throw new Error('Failed to fetchFilteredBills.');
   }
 }

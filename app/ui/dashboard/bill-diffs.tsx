@@ -61,7 +61,7 @@ export default async function BillDiffs() {
     <div className="flex w-full flex-col md:col-span-4">
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-2">
         <h3 className="font-medium p-2">
-          Differenz Zahlungen
+          Differenz der letzten Monate
         </h3>
         <div className="bg-white px-6">
           {transformData(bills).map((bill, i) => {
