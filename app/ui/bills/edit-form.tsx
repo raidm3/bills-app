@@ -196,6 +196,15 @@ export default function EditBillForm({
           </fieldset>
         </div>
         <div className="flex justify-between mt-2">
+          <div className="flex justify-end gap-4 order-last">
+            <Link
+              href="/dashboard/bills"
+              className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+            >
+              Zurück
+            </Link>
+            <Button className="bg-primary" type="submit">Speichern</Button>
+          </div>
           <button
             onClick={async (e) => {
               e.preventDefault();
@@ -208,15 +217,6 @@ export default function EditBillForm({
             </div>
             <span className="ms-1">Löschen</span>
           </button>
-          <div className="flex justify-end gap-4">
-            <Link
-              href="/dashboard/bills"
-              className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-            >
-              Zurück
-            </Link>
-            <Button className="bg-primary" type="submit">Speichern</Button>
-          </div>
         </div>
       </form>
     </div>

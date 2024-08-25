@@ -107,7 +107,7 @@ export async function updateBill(
   }
 
   revalidatePath('/dashboard/bills');
-  revalidatePath('/dashboard/bills/[id]/edit', 'page');
+  revalidatePath('/dashboard/bills/(bill)/[id]/edit', 'page');
   redirect('/dashboard/bills');
 }
 
