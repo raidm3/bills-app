@@ -36,7 +36,7 @@ export default function EditBillForm({
                 name="title"
                 type="text"
                 defaultValue={bill.title}
-                placeholder="Enter a title"
+                placeholder="Titel eingeben"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
             </div>
@@ -85,7 +85,7 @@ export default function EditBillForm({
           {/* Bill Value */}
           <div className="mb-4">
             <label htmlFor="value" className="mb-2 block text-sm font-medium text-gray-700">
-              Wert
+              Betrag
             </label>
             <div className="relative mt-2 rounded-md">
               <input
@@ -94,7 +94,7 @@ export default function EditBillForm({
                 type="number"
                 step="0.01"
                 defaultValue={bill.value}
-                placeholder="Enter € value"
+                placeholder="Betrag eingeben"
                 className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
               <CurrencyEuroIcon className="pointer-events-none absolute right-3 top-1/2 h-[24px] w-[24px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />

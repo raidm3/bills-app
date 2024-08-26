@@ -5,7 +5,6 @@ import { CurrencyEuroIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { UpdateBill } from './buttons';
 import { createBill, State } from '@/app/lib/actions-bills';
 import { useFormState } from 'react-dom';
 
@@ -16,6 +15,21 @@ export default function CreateBillForm({
 }) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useFormState(createBill, initialState);
+  const suggestedTitles = [
+    'Aldi',
+    'Anderl',
+    'DM',
+    'Edeka',
+    'Jadevie',
+    'Kaufland',
+    'La Famiglia',
+    'Lidl',
+    'McDonalds',
+    'Netto',
+    'Prechtl',
+    'Rewe',
+    'Rossmann',
+  ];
 
   return (
     <form action={formAction}>
@@ -25,14 +39,21 @@ export default function CreateBillForm({
           <label htmlFor="title" className="mb-2 block text-sm font-medium text-gray-700">
             Titel
           </label>
-          <div className="relative">
+          <div className="relative w-full max-w-md">
             <input
               id="title"
               name="title"
               type="text"
-              placeholder="Enter a title"
+              placeholder="Titel eingeben"
+              list="suggestedTitles"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              autoFocus
             />
+            <datalist id="suggestedTitles">
+              {suggestedTitles.map((title) => (
+                <option key={title} value={title}>{title}</option>
+              ))}
+            </datalist>
           </div>
           <div id="customer-error" aria-live="polite" aria-atomic="true">
             {state.errors?.title &&
@@ -56,7 +77,7 @@ export default function CreateBillForm({
               className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             >
               <option value="" disabled>
-              Bitte eine Person auswählen
+                Bitte eine Person auswählen
               </option>
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
@@ -78,7 +99,7 @@ export default function CreateBillForm({
         {/* Bill Value */}
         <div className="mb-4">
           <label htmlFor="value" className="mb-2 block text-sm font-medium text-gray-700">
-            Wert
+            Betrag
           </label>
           <div className="relative mt-2 rounded-md">
             <input
@@ -86,7 +107,7 @@ export default function CreateBillForm({
               name="value"
               type="number"
               step="0.01"
-              placeholder="Wert in €"
+              placeholder="Betrag eingeben"
               className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
             <CurrencyEuroIcon className="pointer-events-none absolute right-3 top-1/2 h-[24px] w-[24px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
