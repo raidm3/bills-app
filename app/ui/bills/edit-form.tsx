@@ -127,7 +127,7 @@ export default function EditBillForm({
                   />
                   <label
                     htmlFor="food"
-                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
+                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 active:bg-gray-100"
                   >
                     <Image
                       src="/icons/shopping-cart.svg"
@@ -149,7 +149,7 @@ export default function EditBillForm({
                   />
                   <label
                     htmlFor="dinner"
-                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
+                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 active:bg-gray-100"
                   >
                     <Image
                       src="/icons/romantic-dinner.svg"
@@ -171,7 +171,7 @@ export default function EditBillForm({
                   />
                   <label
                     htmlFor="misc"
-                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
+                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 active:bg-gray-100"
                   >
 
                     <Image
