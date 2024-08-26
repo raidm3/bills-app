@@ -108,6 +108,7 @@ export default function CreateBillForm({
               type="number"
               step="0.01"
               placeholder="Betrag eingeben"
+              autoComplete="off"
               className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
             <CurrencyEuroIcon className="pointer-events-none absolute right-3 top-1/2 h-[24px] w-[24px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
