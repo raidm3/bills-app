@@ -1,129 +1,35 @@
 'use client';
 
-import Image from 'next/image';
-import { UpdateBill } from '@/app/ui/bills/buttons';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredBills } from '@/app/lib/data-bills';
-import Link from 'next/link';
-import clsx from 'clsx';
+import { GroceryItem, GroceryCategory } from '@/app/lib/definitions';
+import { Suspense } from 'react';
+import Item from '@/app/ui/groceries/item';
+import { CreateGroceryItem } from './buttons';
 
-export default async function ShoppingList() {
-  // const shoppingItems = await fetchShoppingItems();
-  const categories = [
-    { key: 'vegetables', label: 'Obst & Gemüse'},
-    { key: 'meat', label: 'Fleisch & Fisch'},
-    { key: 'basics', label: 'Basisprodukte'},
-    { key: 'cooled', label: 'Kühlprodukte'},
-    { key: 'other', label: 'Sonstiges'},
-  ];
-  const shoppingItems = [
-    {
-      id: '1',
-      title: 'Milch',
-      category: 'cooled',
-      done: false,
-      created_at: '2022-12-31 15:30:00',
-    },
-    {
-      id: '2',
-      title: 'Eier',
-      category: 'basics',
-      done: true,
-      created_at: '2022-12-31 15:35:00',
-    },
-    {
-      id: '3',
-      title: 'Topfen',
-      category: 'cooled',
-      done: false,
-      created_at: '2022-12-31 15:40:00',
-    },
-    {
-      id: '4',
-      title: 'Bananen',
-      category: 'vegetables',
-      done: false,
-      created_at: '2022-12-31 15:40:00',
-    },
-    {
-      id: '5',
-      title: 'Paprika',
-      category: 'vegetables',
-      done: true,
-      created_at: '2022-12-31 15:40:00',
-    },
-    {
-      id: '6',
-      title: 'Hühnchen',
-      category: 'meat',
-      done: true,
-      created_at: '2022-12-31 15:40:00',
-    },
-    {
-      id: '7',
-      title: 'Lachs',
-      category: 'meat',
-      done: false,
-      created_at: '2022-12-31 15:40:00',
-    },
-    {
-      id: '8',
-      title: 'Haferflocken',
-      category: 'basics',
-      done: true,
-      created_at: '2022-12-31 15:40:00',
-    },
-    {
-      id: '9',
-      title: 'Klopapier',
-      category: 'other',
-      done: false,
-      created_at: '2022-12-31 15:40:00',
-    },
-    {
-      id: '10',
-      title: 'Duschgel',
-      category: 'other',
-      done: false,
-      created_at: '2022-12-31 15:40:00',
-    },
-  ];
-  const handleClick = async (itemId: string) => {
-    console.log('Clicked on item:', itemId);
-    const item = shoppingItems.find((item) => item.id === itemId);
-    if (item) {
-      item.done = !item.done;
-    }
-  };
-
+export default function ShoppingList({
+  groceries,
+  categories,
+}: {
+  groceries: GroceryItem[];
+  categories: GroceryCategory[];
+}) {
   return (
-    <div className="mt-2 flow-root">
+    <div className="flow-root">
       <div className="inline-block min-w-full align-middle">
+        <CreateGroceryItem />
         {categories.map((category) => {
           return (
             <div
               key={category.key}
               className="rounded-lg bg-gray-50 p-2 mb-4"
             >
-              <h3 className="text-start text-sm mb-2">{category.label}</h3>
+              <h3 className="text-start text-sm mb-2 font-bold">{category.label}</h3>
               <div className="md:hidden">
-                {shoppingItems?.map((item) => {
+                {groceries?.map((item) => {
                   if (category.key === item.category) {
                     return (
-                      <div
-                        key={item.id}
-                        className="mb-2 w-full text-center rounded-md bg-white p-2"
-                        onClick={() => handleClick(item.id)}
-                      >
-                        <p className={clsx(
-                          "",
-                          {
-                            'line-through': item.done,
-                          },
-                        )}>
-                          {item.title}
-                        </p>
-                      </div>
+                      <Suspense key={item.id} fallback={<div>Loading...</div>}>
+                        <Item item={item} />
+                      </Suspense>
                     );
                   }
                 })}

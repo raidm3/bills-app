@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model bills {
+  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id    String    @db.Uuid
+  title      String    @db.VarChar(255)
+  value      Int
+  label      String    @db.VarChar(255)
+  date       DateTime  @db.Date
+  created_at DateTime? @db.Timestamp(6)
+}
+
+model users {
+  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name     String @db.VarChar(255)
+  email    String @unique
+  password String
+}
+
+model groceries {
+  id      Int      @id @default(autoincrement())
+  title   String
+  category    String?
+  done   Boolean
+  created_at DateTime @default(now())
+}

@@ -18,7 +18,8 @@ export function Button({ children, className, ...rest }: ButtonProps) {
       )}
       disabled={pending}
     >
-      {pending ? 'Speichern...' : children}
+      {children}
+      {pending ? '...' : ''}
     </button>
   );
 }

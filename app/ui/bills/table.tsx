@@ -3,6 +3,7 @@ import { UpdateBill } from '@/app/ui/bills/buttons';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredBills } from '@/app/lib/data-bills';
 import Link from 'next/link';
+import prisma from '@/app/lib/prisma';
 
 export default async function BillsTable({
   year,
@@ -20,6 +21,7 @@ export default async function BillsTable({
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
+            {bills.length === 0 && (<p className="text-center">Keine Rechnungen!</p>)}
             {bills?.map((bill) => {
               let iconPath = '';
               switch (bill.label) {

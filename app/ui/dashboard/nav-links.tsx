@@ -25,7 +25,7 @@ const links = [
   },
   {
     name: 'Shopping',
-    href: '/dashboard/shopping-list',
+    href: '/dashboard/groceries',
     icon: ShoppingCartIcon,
   },
   {

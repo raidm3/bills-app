@@ -140,3 +140,16 @@ export type BillPerUserAndMonth = {
   user_id: string;
   total_value: number;
 };
+
+export type GroceryItem = {
+  id: number;
+  title: string;
+  category: string | null;
+  done: boolean;
+  created_at: Date;
+};
+
+export type GroceryCategory = {
+  key: string;
+  label: string;
+};
