@@ -55,7 +55,7 @@ export default function CreateBillForm({
               ))}
             </datalist>
           </div>
-          <div id="customer-error" aria-live="polite" aria-atomic="true">
+          <div id="title-error" aria-live="polite" aria-atomic="true">
             {state.errors?.title &&
               state.errors.title.map((error: string) => (
                 <p className="mt-2 text-xs text-red-500" key={error}>
@@ -67,12 +67,12 @@ export default function CreateBillForm({
 
         {/* Bill User */}
         <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium text-gray-700">
+          <label htmlFor="user" className="mb-2 block text-sm font-medium text-gray-700">
             Person
           </label>
           <div className="relative">
             <select
-              id="customer"
+              id="user"
               name="userId"
               className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             >
@@ -86,7 +86,7 @@ export default function CreateBillForm({
               ))}
             </select>
           </div>
-          <div id="customer-error" aria-live="polite" aria-atomic="true">
+          <div id="user-error" aria-live="polite" aria-atomic="true">
             {state.errors?.userId &&
               state.errors.userId.map((error: string) => (
                 <p className="mt-2 text-xs text-red-500" key={error}>

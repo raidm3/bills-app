@@ -4,11 +4,10 @@ import BillDiffs from '@/app/ui/dashboard/bill-diffs';
 import { fetchBillsPerMonth } from '@/app/lib/data-bills';
 import { Suspense } from 'react';
 import { MonthlyBills, BillPerMonthAndLabel } from '@/app/lib/definitions';
-import { aggregateDataByMonth } from '@/app/lib/utils';
 import {
-  MonthlyBillsChartSkeleton,
-  LatestInvoicesSkeleton,
   CardsSkeleton,
+  MonthlyBillsChartSkeleton,
+  BillDiffsSkeleton,
 } from '@/app/ui/skeletons';
 
 export const dynamic = 'force-dynamic';
@@ -43,7 +42,7 @@ export default async function Page() {
         <Suspense fallback={<MonthlyBillsChartSkeleton />}>
           <MonthlyBillsChart data={data} />
         </Suspense>
-        <Suspense fallback={<LatestInvoicesSkeleton />}>
+        <Suspense fallback={<BillDiffsSkeleton />}>
           <BillDiffs />
         </Suspense>
       </div>

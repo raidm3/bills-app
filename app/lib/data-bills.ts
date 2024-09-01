@@ -1,13 +1,6 @@
 import { sql } from '@vercel/postgres';
 import {
-  UserField,
-  CustomersTableType,
-  InvoiceForm,
-  InvoicesTable,
   BillsTable,
-  BillForm,
-  LatestInvoiceRaw,
-  Revenue,
 } from './definitions';
 
 

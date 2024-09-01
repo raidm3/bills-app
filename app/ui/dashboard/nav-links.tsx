@@ -24,7 +24,7 @@ const links = [
     icon: CurrencyEuroIcon,
   },
   {
-    name: 'Shopping',
+    name: 'Groceries',
     href: '/dashboard/groceries',
     icon: ShoppingCartIcon,
   },

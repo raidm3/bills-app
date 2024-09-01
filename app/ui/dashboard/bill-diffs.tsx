@@ -70,9 +70,7 @@ export default async function BillDiffs() {
                 key={`${bill.month}-${bill.year}`}
                 className={clsx(
                   'flex flex-row items-center justify-between py-4',
-                  {
-                    'border-t': i !== 0,
-                  },
+                  { 'border-t': i !== 0 },
                 )}
               >
                 <div className="text-sm">{`${bill.month} ${bill.year}`}</div>

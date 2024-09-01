@@ -4,6 +4,7 @@ import { GroceryItem, GroceryCategory } from '@/app/lib/definitions';
 import { Suspense } from 'react';
 import Item from '@/app/ui/groceries/item';
 import { CreateGroceryItem } from './buttons';
+import { LoadingSkeleton } from '@/app/ui/skeletons';
 
 export default function ShoppingList({
   groceries,
@@ -27,7 +28,7 @@ export default function ShoppingList({
                 {groceries?.map((item) => {
                   if (category.key === item.category) {
                     return (
-                      <Suspense key={item.id} fallback={<div>Loading...</div>}>
+                      <Suspense key={item.id} fallback={<LoadingSkeleton />}>
                         <Item item={item} />
                       </Suspense>
                     );

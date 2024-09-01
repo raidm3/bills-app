@@ -76,7 +76,7 @@ export default function Item({ item }: { item: GroceryItem }) {
             <span className="ms-2">{item.title}</span>
           </div>
           <div className="flex items-center">
-            {isLoading ? (<Image src="/icons/loading-dots.svg" alt="" width={16} height={16} />) : ''}
+            {isLoading ? (<Image src="/icons/loading-dots.svg" alt="" width={24} height={24} />) : ''}
           </div>
         </div>
       </button>
