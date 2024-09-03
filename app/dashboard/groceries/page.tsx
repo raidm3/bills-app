@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import GroceryListActions from '@/app/ui/groceries/list-actions';
 import List from '@/app/ui/groceries/list';
 import { Metadata } from 'next';
 import prisma from '@/app/lib/prisma';
@@ -20,12 +21,16 @@ export default async function Page() {
     { key: 'cooled', label: 'Kühlprodukte'},
     { key: 'other', label: 'Sonstiges'},
   ];
+  const itemIds = groceries.filter((g) => g.done).map((g) => g.id);
 
   return (
     <div className="w-full">
-      <h1 className="hidden md:block text-2xl mb-2">Shopping List</h1>
+      <div className="flex justify-between items-center mb-3">
+        <h1 className="text-xl">Einkaufsliste</h1>
+        <GroceryListActions itemIds={itemIds} />
+      </div>
       <Suspense fallback={<LoadingSkeleton />}>
-        <List groceries={groceries} categories={categories}/>
+        <List groceries={groceries} categories={categories} />
       </Suspense>
     </div>
   );

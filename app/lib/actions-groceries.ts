@@ -25,6 +25,18 @@ export type State = {
 
 const CreateItem = FormSchema.omit({ id: true });
 
+export async function deleteManyGroceryItems(ids: number[]) {
+  try {
+    await prisma.groceries.deleteMany({
+      where: { id: { in: ids } },
+    });
+  } catch (error) {
+    return false;
+  }
+
+  revalidatePath('/dashboard/groceries');
+}
+
 export async function createGroceryItem(prevState: State, formData: FormData) {
   // Validate form using Zod
   const validatedFields = CreateItem.safeParse({
