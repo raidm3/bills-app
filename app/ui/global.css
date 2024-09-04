@@ -20,3 +20,19 @@ input[type='number']::-webkit-outer-spin-button {
 .scroll-container::-webkit-scrollbar {
   display: none;
 }
+
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-15deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.tilt-shake {
+  animation-name: tilt-shaking;
+  animation-duration: 0.2s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+}

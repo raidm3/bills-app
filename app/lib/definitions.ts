@@ -73,6 +73,7 @@ export type GroceryItem = {
   title: string;
   category: string | null;
   done: boolean;
+  favorite: boolean;
   created_at: Date;
 };
 

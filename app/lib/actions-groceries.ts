@@ -28,7 +28,10 @@ const CreateItem = FormSchema.omit({ id: true });
 export async function deleteManyGroceryItems(ids: number[]) {
   try {
     await prisma.groceries.deleteMany({
-      where: { id: { in: ids } },
+      where: {
+        id: { in: ids },
+        favorite: false,
+      },
     });
   } catch (error) {
     return false;
@@ -86,13 +89,20 @@ export async function createGroceryItem(prevState: State, formData: FormData) {
   }
 }
 
-export async function updateGroceryItem({itemId, done}: {
+const cleanObject = (obj: {}) => {
+  const filteredEntries = Object.entries(obj).filter(([key, value]) => value !== undefined);
+  return Object.fromEntries(filteredEntries);
+};
+
+export async function updateGroceryItem({itemId, done, favorite}: {
   itemId: number,
-  done: boolean,
+  done?: boolean,
+  favorite?: boolean,
 }) {
+  const data = cleanObject({ done, favorite });
   await prisma.groceries.update({
     where: { id: itemId },
-    data: { done: !done },
+    data,
   });
 
   revalidatePath('/dashboard/groceries');

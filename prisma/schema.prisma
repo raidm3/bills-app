@@ -29,6 +29,7 @@ model groceries {
   id      Int      @id @default(autoincrement())
   title   String
   category    String?
-  done   Boolean
+  done   Boolean @default(false)
+  favorite Boolean @default(false)
   created_at DateTime @default(now())
 }

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const groceries = await prisma.groceries.findMany({
-    select: { id: true, title: true, category: true, done: true, created_at: true },
+    select: { id: true, title: true, category: true, done: true, favorite: true, created_at: true },
     orderBy: { id: 'asc' },
   });
   const categories = [
@@ -21,6 +21,8 @@ export default async function Page() {
     { key: 'cooled', label: 'Kühlprodukte'},
     { key: 'other', label: 'Sonstiges'},
   ];
+  const categorySet = new Set(groceries.map(item => item.category));
+  const availableCategories = categories.filter(category => categorySet.has(category.key));
   const itemIds = groceries.filter((g) => g.done).map((g) => g.id);
 
   return (
@@ -30,7 +32,7 @@ export default async function Page() {
         <GroceryListActions itemIds={itemIds} />
       </div>
       <Suspense fallback={<LoadingSkeleton />}>
-        <List groceries={groceries} categories={categories} />
+        <List groceries={groceries} categories={availableCategories} />
       </Suspense>
     </div>
   );
