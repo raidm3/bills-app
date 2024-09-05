@@ -17,7 +17,7 @@ export default function Item({ item }: { item: GroceryItem }) {
     if (animate) {
       const timer = setTimeout(() => {
         setAnimate(false);
-      }, 1500);
+      }, 2000);
 
       return () => clearTimeout(timer);
     }

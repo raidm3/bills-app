@@ -53,9 +53,9 @@ export async function createBill(prevState: State, formData: FormData) {
  
   // Prepare data for insertion into the database
   const { userId, title, value, label } = validatedFields.data;
-  const valueInCents = value * 100;
+  const valueInCents = Math.ceil(value * 100);
   const date = new Date().toISOString().split('T')[0];
- 
+
   // Insert data into the database
   try {
     await sql`

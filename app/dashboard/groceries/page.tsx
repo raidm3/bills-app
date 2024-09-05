@@ -5,6 +5,9 @@ import { Metadata } from 'next';
 import prisma from '@/app/lib/prisma';
 import { LoadingSkeleton } from '@/app/ui/skeletons';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: 'Shopping List',
 };

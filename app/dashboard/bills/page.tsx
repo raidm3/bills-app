@@ -6,6 +6,9 @@ import { BillsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchBillsPages } from '@/app/lib/data';
 import { Metadata } from 'next';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
  
 export const metadata: Metadata = {
   title: 'Bills',
