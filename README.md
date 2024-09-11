@@ -6,6 +6,7 @@
 - Typescript
 - Tailwind CSS
 - PostgreSQL
+- Prisma
 
 # Getting started
 

@@ -3,7 +3,6 @@ import { UpdateBill } from '@/app/ui/bills/buttons';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredBills } from '@/app/lib/data-bills';
 import Link from 'next/link';
-import prisma from '@/app/lib/prisma';
 
 export default async function BillsTable({
   year,

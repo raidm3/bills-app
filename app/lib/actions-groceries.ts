@@ -112,3 +112,10 @@ export async function deleteGroceryItem(itemId: number) {
   await prisma.groceries.delete({ where: { id: itemId } });
   revalidatePath('/dashboard/groceries');
 }
+
+export async function addIngredientsToGroceryList(ingredients: string[]) {
+  console.log('Adding ingredients:', ingredients);
+
+  revalidatePath('/dashboard/groceries');
+  redirect('/dashboard/recipes');
+}
