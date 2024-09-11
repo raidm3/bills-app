@@ -17,7 +17,7 @@ export default async function Page({
     {
       id: '1',
       title: 'Spaghetti Carbonara',
-      coverImage: '/images/spaghetti-carbonara.jpg',
+      coverImage: '/images/spaghetti-carbonara-mobile.webp',
       ingredients: [
         'Spaghetti 250g',
         'Speck 100g',
@@ -39,7 +39,7 @@ export default async function Page({
     {
       id: '2',
       title: 'Erdnuss Curry',
-      coverImage: '/images/erdnuss-curry.jpg',
+      coverImage: '/images/erdnuss-curry-mobile.webp',
       ingredients: [
         'Knoblauchzehe 2x',
         'Karotte 1x',
@@ -60,7 +60,7 @@ export default async function Page({
     {
       id: '3',
       title: 'Chicken Burger',
-      coverImage: '/images/crispy-chicken-burger.jpg',
+      coverImage: '/images/crispy-chicken-burger-mobile.webp',
       ingredients: [
         'Burger Buns 2x',
         'Chicken Breast 2x',
@@ -78,7 +78,7 @@ export default async function Page({
     {
       id: '4',
       title: 'Kaiserschmarrn',
-      coverImage: '/images/wiener-kaiserschmarrn.jpg',
+      coverImage: '/images/wiener-kaiserschmarrn-mobile.webp',
       ingredients: [
         'Mehl 200g',
         'Milch 300ml',

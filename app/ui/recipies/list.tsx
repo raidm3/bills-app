@@ -20,8 +20,8 @@ export default function RecipiesList({ recipes }: { recipes: any[] }) {
             <Image
               src={r.coverImage}
               alt={r.title}
-              width={960}
-              height={540}
+              height={250}
+              width={150}
               className="object-cover w-full h-32 rounded-md"
             />
             <div

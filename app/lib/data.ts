@@ -74,7 +74,7 @@ export async function fetchRecipeById(id: string) {
   return {
     id: '2',
     title: 'Erdnuss Curry',
-    coverImage: '/images/erdnuss-curry.jpg',
+    coverImage: '/images/erdnuss-curry.webp',
     ingredients: [
       'Knoblauchzehe 2x',
       'Karotte 1x',
