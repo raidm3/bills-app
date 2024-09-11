@@ -11,7 +11,6 @@ export default async function Page({
     query?: string;
   }
 }) {
-  // await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate network delay
   const query = searchParams?.query || '';
   const recipes = [
     {

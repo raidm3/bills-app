@@ -218,6 +218,85 @@ export function BillsPageSkeleton() {
   );
 }
 
+export function GroceryMobileSkeleton() {
+  return (
+    <div className="rounded-lg bg-gray-50 p-2 mb-4">
+      <div className="h-5 w-20 rounded-md bg-gray-200 mb-2"></div>
+      <div className="flex items-center mb-2">
+        <div className="mb-2 w-full rounded-md bg-white p-3">
+          <div className="flex justify-between">
+            <div className="flex items-center">
+              <div className="h-6 w-6 rounded-md bg-gray-200"></div>
+              <div className="h-6 w-40 rounded-md bg-gray-200 font-medium ms-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function GroceriesTableSkeleton() {
+  return (
+    <div className="mt-4 flow-root">
+      <div className="inline-block min-w-full align-middle">
+        <GroceryMobileSkeleton />
+        <GroceryMobileSkeleton />
+        <GroceryMobileSkeleton />
+        <GroceryMobileSkeleton />
+        <GroceryMobileSkeleton />
+      </div>
+    </div>
+  );
+}
+
+export function GroceriesPageSkeleton() {
+  return (
+    <div className={`${shimmer} w-full overflow-hidden rounded-md`}>
+      <div className="flex items-center justify-between gap-2 md:mt-8">
+        <div className="relative inline-block rounded-lg w-24 h-10 bg-gray-100 d-block me-4"></div>
+        <div className="relative inline-block rounded-lg w-24 h-10 bg-gray-100 d-block"></div>
+      </div>
+      <GroceriesTableSkeleton />
+    </div>
+  );
+}
+
+export function RecipeSkeleton() {
+  return (
+    <div className="p-2">
+      <div className="h-6 w-32 rounded-md bg-gray-200 text-medium my-1"></div>
+      <div className="h-32 w-32 rounded-md bg-gray-200"></div>
+      <div className="flex flex-wrap">
+        <div className="h-4 w-16 rounded-md bg-gray-200 px-2 me-1 mt-1.5"></div>
+        <div className="h-4 w-16 rounded-md bg-gray-200 px-2 me-1 mt-1.5"></div>
+      </div>
+    </div>
+  );
+}
+
+export function RecipesListSkeleton() {
+  return (
+    <div className="flex items-center justify-center w-full">
+      <div className="grid grid-cols-2 gap-4">
+        <RecipeSkeleton />
+        <RecipeSkeleton />
+        <RecipeSkeleton />
+        <RecipeSkeleton />
+      </div>
+    </div>
+  );
+}
+
+export function RecipesPageSkeleton() {
+  return (
+    <div className={`${shimmer} w-full overflow-hidden rounded-md`}>
+      <div className="relative inline-block rounded-lg w-full h-16 bg-gray-100 d-block mx-auto mb-3"></div>
+      <RecipesListSkeleton />
+    </div>
+  );
+}
+
 export function LoadingSkeleton() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
