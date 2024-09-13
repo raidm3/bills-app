@@ -26,10 +26,22 @@ model users {
 }
 
 model groceries {
-  id      Int      @id @default(autoincrement())
-  title   String
-  category    String?
-  done   Boolean @default(false)
-  favorite Boolean @default(false)
+  id         Int      @id @default(autoincrement())
+  title      String
+  category   String?
+  done       Boolean  @default(false)
+  favorite   Boolean  @default(false)
   created_at DateTime @default(now())
+}
+
+model recipes {
+  id          Int      @id @default(autoincrement())
+  title       String
+  coverImage  String?
+  ingredients String
+  link        String?
+  description String?
+  images      String?
+  tags        String?
+  created_at  DateTime @default(now())
 }
