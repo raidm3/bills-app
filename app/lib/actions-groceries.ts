@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import prisma from '@/app/lib/prisma';
 import { redirect } from 'next/navigation';
+import { Grocery } from '@/app/lib/definitions';
 
 const FormSchema = z.object({
   id: z.number(),
@@ -23,7 +24,7 @@ export type State = {
   resetKey?: number;
 }
 
-const CreateItem = FormSchema.omit({ id: true });
+const CreateItem = FormSchema.omit({ id: true, navigation: true });
 
 export async function deleteManyGroceryItems(ids: number[]) {
   try {
@@ -40,53 +41,34 @@ export async function deleteManyGroceryItems(ids: number[]) {
   revalidatePath('/dashboard/groceries');
 }
 
-export async function createGroceryItem(prevState: State, formData: FormData) {
-  // Validate form using Zod
-  const validatedFields = CreateItem.safeParse({
-    title: formData.get('title'),
-    category: formData.get('category'),
-    navigation: formData.get('navigation'),
-  });
- 
-  // If form validation fails, return errors early. Otherwise, continue.
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Grocery Item.',
-      resetKey: prevState?.resetKey,
-    };
+export async function createGroceryItems(items: Grocery[], prevState: any, formData: FormData) {
+  const data = items.map((item) => {
+    const validated = CreateItem.safeParse({
+      title: item.title,
+      category: item.category,
+    });
+    return validated.success ? validated.data : null;
+  }).filter(Boolean);
+
+  if (! data.length) {
+    return 'Validierung fehlgeschlagen.';
   }
 
-  // Prepare data for insertion into the database
-  const { title, category, navigation } = validatedFields.data;
   let res;
- 
-  // Insert data into the database
   try {
-    res = await prisma.groceries.create({
-      data: {
-        title,
-        category,
-        done: false,
-      },
+    res = await prisma.groceries.createMany({
+      data: items,
     });
   } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return {
-      message: 'Database Error: Failed to Create Grocery Item.',
-      resetKey: prevState?.resetKey,
-    };
+    return 'Database Error: Failed to Create Grocery Item.';
   }
- 
-  if (navigation === 'list') {
+
+  if (res) {
     revalidatePath('/dashboard/groceries');
     redirect('/dashboard/groceries');
   }
 
-  return {
-    message: 'Grocery Item Created Successfully.',
-    resetKey: res.id,
-  }
+  return 'Grocery Items Created Successfully.';
 }
 
 const cleanObject = (obj: {}) => {
@@ -115,6 +97,20 @@ export async function deleteGroceryItem(itemId: number) {
 
 export async function addIngredientsToGroceryList(ingredients: string[]) {
   console.log('Adding ingredients:', ingredients);
+
+  const data = ingredients.map((ingredient) => ({
+    title: ingredient,
+    category: 'other',
+    done: false,
+  }));
+
+  try {
+    await prisma.groceries.createMany({
+      data,
+    });
+  } catch (error) {
+    console.log('Error adding ingredients:', error);
+  }
 
   revalidatePath('/dashboard/groceries');
   redirect('/dashboard/recipes');

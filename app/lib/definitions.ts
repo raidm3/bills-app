@@ -77,7 +77,36 @@ export type GroceryItem = {
   created_at: Date;
 };
 
+export type Grocery = {
+  title: string;
+  category: string
+};
+
 export type GroceryCategory = {
   key: string;
   label: string;
 };
+
+export type RecipeDB = {
+  id: number;
+  title: string;
+  coverImage: string;
+  ingredients: string;
+  tags: string;
+  link: string;
+  images: string;
+  description: string;
+  created_at: Date;
+}
+
+export type Recipe = {
+  id: number;
+  title: string;
+  coverImage: string;
+  ingredients: string[];
+  tags: string[];
+  link: string;
+  images: string[];
+  description: string;
+  created_at: Date;
+}
