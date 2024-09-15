@@ -12,19 +12,9 @@ const FormSchema = z.object({
   category: z.enum(['vegetables', 'meat', 'basics', 'cooled', 'other'], {
     invalid_type_error: 'Bitte eine Kategorie auswählen.',
   }),
-  navigation: z.enum(['list', 'create']),
 });
 
-export type State = {
-  errors?: {
-    title?: string[];
-    category?: string[];
-  };
-  message?: string | null;
-  resetKey?: number;
-}
-
-const CreateItem = FormSchema.omit({ id: true, navigation: true });
+const CreateItem = FormSchema.omit({ id: true });
 
 export async function deleteManyGroceryItems(ids: number[]) {
   try {
@@ -42,7 +32,7 @@ export async function deleteManyGroceryItems(ids: number[]) {
 }
 
 export async function createGroceryItems(items: Grocery[], prevState: any, formData: FormData) {
-  const data = items.map((item) => {
+  const data: any[]  = items.map((item) => {
     const validated = CreateItem.safeParse({
       title: item.title,
       category: item.category,
@@ -57,7 +47,7 @@ export async function createGroceryItems(items: Grocery[], prevState: any, formD
   let res;
   try {
     res = await prisma.groceries.createMany({
-      data: items,
+      data,
     });
   } catch (error) {
     return 'Database Error: Failed to Create Grocery Item.';

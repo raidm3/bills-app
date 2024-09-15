@@ -6,14 +6,16 @@ import { useState, useRef } from 'react';
 import { Grocery } from '@/app/lib/definitions';
 import { useFormState, useFormStatus } from 'react-dom';
 import Image from 'next/image';
+import clsx from 'clsx';
 
-function Submit({ title, category }: { title: string, category: string  }) {
+function Submit({ title, category, groceriesCount }: { title: string, category: string, groceriesCount: number }) {
   const { pending } = useFormStatus();
+  const isDisabled = (groceriesCount === 0 && (title === '' || category === '')) || pending;
   return (
     <button
       className="flex h-10 min-w-26 items-center rounded-lg px-4 text-sm font-medium text-white bg-success disabled:bg-green-300"
       type="submit"
-      disabled={title === '' || category === '' || pending}
+      disabled={isDisabled}
     >
       { pending ? (<Image src="/icons/loading-dots.svg" alt="" width={24} height={24} />) : 'Speichern' }
     </button>
@@ -38,6 +40,10 @@ export default function CreateGroceryItemForm() {
     if (title.length > 0 && category.length > 0) {
       setGroceries((prev) => [...prev, { title, category }]);
     }
+
+    // reset form values
+    setTitle('');
+    setCategory('');
 
     if (createForm.current) {
       createForm.current.reset();
@@ -85,6 +91,7 @@ export default function CreateGroceryItemForm() {
                     type="radio"
                     value="vegetables"
                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                    checked={category === "vegetables"}
                     onChange={(e) => setCategory(e.target.value)}
                   />
                   <label
@@ -101,6 +108,7 @@ export default function CreateGroceryItemForm() {
                     type="radio"
                     value="meat"
                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                    checked={category === "meat"}
                     onChange={(e) => setCategory(e.target.value)}
                   />
                   <label
@@ -117,6 +125,7 @@ export default function CreateGroceryItemForm() {
                     type="radio"
                     value="basics"
                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                    checked={category === "basics"}
                     onChange={(e) => setCategory(e.target.value)}
                   />
                   <label
@@ -133,6 +142,7 @@ export default function CreateGroceryItemForm() {
                     type="radio"
                     value="cooled"
                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                    checked={category === "cooled"}
                     onChange={(e) => setCategory(e.target.value)}
                   />
                   <label
@@ -149,6 +159,7 @@ export default function CreateGroceryItemForm() {
                     type="radio"
                     value="other"
                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                    checked={category === "other"}
                     onChange={(e) => setCategory(e.target.value)}
                   />
                   <label
@@ -171,7 +182,7 @@ export default function CreateGroceryItemForm() {
             >
               Zurück
             </Link>
-            <Submit title={title} category={category} />
+            <Submit title={title} category={category} groceriesCount={groceries.length} />
             <button
               className="flex h-10 items-center rounded-lg px-4 text-sm font-medium text-white bg-primary disabled:bg-blue-300"
               onClick={(e) => resetForm(e)}
@@ -180,7 +191,18 @@ export default function CreateGroceryItemForm() {
               Nächste
             </button>
           </div>
-          <div className="flex justify-end mt-3">
+          <h4 className={clsx("text-sm my-2", { 'hidden': groceries.length === 0 })}>
+            Bereits hinzugefügt
+          </h4>
+          <div className="flex flex-wrap">
+            {groceries.map((grocery, index) => (
+              <span
+                key={grocery.title}
+                className="font-normal text-xs py-1 px-2 m-1 bg-gray-200 rounded-full"
+              >
+                {grocery.title}
+              </span>
+            ))}
           </div>
         </div>
       </div>
