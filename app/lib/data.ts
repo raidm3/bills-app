@@ -69,27 +69,3 @@ export async function fetchUsers() {
     throw new Error('Failed to fetch all users.');
   }
 }
-
-export async function fetchRecipeById(id: string) {
-  return {
-    id: '2',
-    title: 'Erdnuss Curry',
-    coverImage: '/images/erdnuss-curry.webp',
-    ingredients: [
-      'Knoblauchzehe 2x',
-      'Karotte 1x',
-      'Zucchini 1x',
-      'Paprika 1x',
-      'Brokkoli 0,5x',
-      'Hähnchen 400g',
-      'Reis 200g',
-    ],
-    link: 'https://www.eatbetter.de/rezepte/erdnuss-curry-cremig-lecker',
-    description: `Den Speck bzw. Schinken nicht zu fein würfeln. In Olivenöl glasig anschwitzen. Beiseitestellen. Die Pasta in reichlich Salzwasser al dente kochen - auf keinen Fall weich, da die Pasta später noch etwas nachkocht. Gegen Ende der Kochzeit etwas Kochwasser (1 - 2 Espressotässchen) auffangen oder einfach abschöpfen.<br/><br/>Währenddessen die Eier mit den beiden Käsesorten verquirlen. Leicht salzen, schwarzen Pfeffer nach Geschmack mahlen und zufügen.<br/><br/>Den Speck bzw. Schinken erneut erhitzen. Aufgefangenes Kochwasser hinzufügen und aufkochen lassen. Die Pasta zufügen, verrühren. Eier-Käse-Mischung zufügen. Leicht stocken lassen und gut rühren, damit die Mischung die Pasta zärtlich umhüllt.`,
-    images: [],
-    tags: [
-      'Reis',
-      'Fleisch',
-    ],
-  };
-}

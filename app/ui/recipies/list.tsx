@@ -18,7 +18,7 @@ export default function RecipiesList({ recipes }: { recipes: any[] }) {
           >
             <h2 className="my-1 text-medium font-medium">{r.title}</h2>
             <Image
-              src={r.coverImage}
+              src={r.coverImage ?? '/images/food-cover-mobile.webp' }
               alt={r.title}
               height={250}
               width={150}
@@ -30,7 +30,7 @@ export default function RecipiesList({ recipes }: { recipes: any[] }) {
               {r.tags.map((tag: string) => (
                 <span
                   key={tag}
-                  className="font-medium text-xs bg-violet-400 text-white rounded-full px-2 me-1 mt-1.5"
+                  className="font-medium text-xs bg-emerald-600 text-white rounded-full px-2 me-1 mt-1.5"
                 >
                   {tag}
                 </span>

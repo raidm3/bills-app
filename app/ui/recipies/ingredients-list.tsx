@@ -3,23 +3,27 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { addIngredientsToGroceryList } from "@/app/lib/actions-groceries";
+import { Ingredient } from "@/app/lib/definitions";
 
-export default function IngredientsList({ ingredients }: { ingredients: any[] }) {
-  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
 
-  const handleclick = (ingredient: string) => {
-    if (! selectedIngredients.includes(ingredient)) {
+export default function IngredientsList({ ingredients }: { ingredients: Ingredient[] }) {
+  const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
+
+  const handleclick = (ingredient: Ingredient) => {
+    if (! selectedIngredients.find((i) => i.id === ingredient.id)) {
       setSelectedIngredients([
         ...selectedIngredients,
         ingredient,
       ]);
     } else {
-      setSelectedIngredients(selectedIngredients.filter((ing) => ing !== ingredient));
+      setSelectedIngredients(selectedIngredients.filter((ing) => ing.id !== ingredient.id));
     }
   };
 
   const addIngredients = async () => {
-    await addIngredientsToGroceryList(selectedIngredients);
+    if (selectedIngredients.length > 0) {
+      await addIngredientsToGroceryList(selectedIngredients);
+    }
   };
 
   return (
@@ -28,7 +32,7 @@ export default function IngredientsList({ ingredients }: { ingredients: any[] })
       <ul className="flex flex-wrap mb-3">
         {ingredients.map((ingredient) => (
           <li
-            key={ingredient}
+            key={ingredient.id}
             className="me-1.5 mb-1.5"
           >
             <button
@@ -38,10 +42,10 @@ export default function IngredientsList({ ingredients }: { ingredients: any[] })
                   '!bg-success !border-success !text-white': selectedIngredients.includes(ingredient),
                 },
               )}
-              value={ingredient}
+              value={ingredient.title}
               onClick={() => handleclick(ingredient)}
             >
-              {ingredient}
+              {ingredient.title}
             </button>
           </li>
         ))}

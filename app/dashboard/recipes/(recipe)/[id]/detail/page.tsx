@@ -1,18 +1,20 @@
 
-import { fetchRecipeById } from '@/app/lib/data';
+import { fetchRecipeById } from '@/app/lib/data-recipes';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import IngredientsList from '@/app/ui/recipies/ingredients-list';
 import Link from "next/link";
 
 export default async function Recipe({ params }: { params: { id: string } }) {
-  const id = params.id;
+  const id = +params.id;
 
   const recipe = await fetchRecipeById(id);
 
   if (!recipe) {
     notFound();
   }
+
+  const coverImage = recipe.coverImage ?? '/images/food-cover-mobile.webp';
 
   return (
     <div>
@@ -21,7 +23,7 @@ export default async function Recipe({ params }: { params: { id: string } }) {
       </h1>
       <Image
         className="mb-2 rounded-md"
-        src={recipe.coverImage}
+        src={coverImage}
         alt={recipe.title}
         width={600}
         height={400}

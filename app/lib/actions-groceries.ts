@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import prisma from '@/app/lib/prisma';
 import { redirect } from 'next/navigation';
-import { Grocery } from '@/app/lib/definitions';
+import { Grocery, Ingredient } from '@/app/lib/definitions';
 
 const FormSchema = z.object({
   id: z.number(),
@@ -85,12 +85,10 @@ export async function deleteGroceryItem(itemId: number) {
   revalidatePath('/dashboard/groceries');
 }
 
-export async function addIngredientsToGroceryList(ingredients: string[]) {
-  console.log('Adding ingredients:', ingredients);
-
+export async function addIngredientsToGroceryList(ingredients: Ingredient[]) {
   const data = ingredients.map((ingredient) => ({
-    title: ingredient,
-    category: 'other',
+    title: ingredient.title,
+    category: ingredient.category,
     done: false,
   }));
 

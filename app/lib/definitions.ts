@@ -1,7 +1,3 @@
-// This file contains type definitions for your data.
-// It describes the shape of the data, and what data type each property should accept.
-// For simplicity of teaching, we're manually defining these types.
-// However, these types are generated automatically if you're using an ORM such as Prisma.
 export type User = {
   id: string;
   name: string;
@@ -90,23 +86,27 @@ export type GroceryCategory = {
 export type RecipeDB = {
   id: number;
   title: string;
-  coverImage: string;
-  ingredients: string;
-  tags: string;
-  link: string;
-  images: string;
-  description: string;
+  coverImage: string | null;
+  tags: string | null;
+  link: string | null;
+  images: string | null;
+  description: string | null;
   created_at: Date;
-}
+};
 
 export type Recipe = {
   id: number;
   title: string;
   coverImage: string;
-  ingredients: string[];
   tags: string[];
   link: string;
   images: string[];
   description: string;
   created_at: Date;
+}
+
+export type Ingredient = {
+  id: number;
+  title: string;
+  category: string;
 }

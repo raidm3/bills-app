@@ -38,10 +38,18 @@ model recipes {
   id          Int      @id @default(autoincrement())
   title       String
   coverImage  String?
-  ingredients String
+  ingredients ingredients[]
   link        String?
   description String?
   images      String?
   tags        String?
   created_at  DateTime @default(now())
+}
+
+model ingredients {
+  id          Int      @id @default(autoincrement())
+  recipeId    Int
+  recipe      recipes  @relation(fields: [recipeId], references: [id])
+  title       String
+  category    String
 }
