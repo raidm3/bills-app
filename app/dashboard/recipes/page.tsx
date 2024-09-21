@@ -14,7 +14,6 @@ export default async function Page({
 }) {
   const query = searchParams?.query || '';
 
-  
   const recipes = await fetchAllRecipes(query) || [];
 
   return (

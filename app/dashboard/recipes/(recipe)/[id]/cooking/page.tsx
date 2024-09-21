@@ -1,13 +1,11 @@
 
-import { fetchRecipeById } from '@/app/lib/data';
+import { fetchRecipeById } from '@/app/lib/data-recipes';
 import { notFound } from 'next/navigation';
-import IngredientsList from '@/app/ui/recipies/ingredients-list';
-import Link from "next/link";
 import parse from 'html-react-parser';
 import { MinusIcon } from '@heroicons/react/24/outline';
 
 export default async function Recipe({ params }: { params: { id: string } }) {
-  const id = params.id;
+  const id = +params.id;
 
   const recipe = await fetchRecipeById(id);
 
@@ -37,18 +35,18 @@ export default async function Recipe({ params }: { params: { id: string } }) {
       <ul className="mb-4">
         {recipe.ingredients.map((ingredient) => (
           <div
-            key={ingredient}
+            key={ingredient.id}
             className="block"
           >
             <MinusIcon className="w-4 inline me-1" /> 
-            <li className="inline">{ingredient}</li>
+            <li className="inline">{ingredient.title}</li>
           </div>
         ))}
       </ul>
       <hr />
       <div className="mt-4">
         <h2 className="font-medium text-lg">Zubereitung</h2>
-        <p>{parse(recipe.description)}</p>
+        <p>{parse(recipe.description ?? '')}</p>
       </div>
     </div>
   );
