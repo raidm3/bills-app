@@ -8,7 +8,7 @@ import { TrashIcon, StarIcon } from "@heroicons/react/24/outline";
 import Image from 'next/image';
 import { TouchEvent } from 'react';
 
-export default function Item({ item }: { item: GroceryItem }) {
+export default function Item({ item, onItemUpdated }: { item: GroceryItem, onItemUpdated: (item: any) => void }) {
   const [isLoading, setIsLoading] = useState(false);
   const [startX, setStartX] = useState(0);
   const [animate, setAnimate] = useState(false);
@@ -24,12 +24,8 @@ export default function Item({ item }: { item: GroceryItem }) {
   }, [animate]);
 
   const handleClick = async (itemId: number) => {
-    setIsLoading(true);
-    await updateGroceryItem({
-      itemId,
-      done: !item?.done || false,
-    });
-    setIsLoading(false);
+    onItemUpdated(item);
+    item.done = !item.done;
   };
 
   const handleDelete = async (itemId: number) => {

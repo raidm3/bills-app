@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import prisma from '@/app/lib/prisma';
 import { redirect } from 'next/navigation';
-import { Grocery, Ingredient } from '@/app/lib/definitions';
+import { Grocery, GroceryItem, Ingredient } from '@/app/lib/definitions';
 
 const FormSchema = z.object({
   id: z.number(),
@@ -78,6 +78,18 @@ export async function updateGroceryItem({itemId, done, favorite}: {
   });
 
   revalidatePath('/dashboard/groceries');
+}
+
+export async function updateGroceryItems(items: GroceryItem[]) {
+  try {
+    const promises = items.map(item => {
+      return updateGroceryItem({itemId: item.id, done: item.done, favorite: item.favorite});
+    });
+    await Promise.all(promises);
+  } catch (error) {
+    console.error("Failed to update grocery items:", error);
+    throw error;
+  }
 }
 
 export async function deleteGroceryItem(itemId: number) {
