@@ -4,10 +4,12 @@ import clsx from "clsx";
 import { useState } from "react";
 import { addIngredientsToGroceryList } from "@/app/lib/actions-groceries";
 import { Ingredient } from "@/app/lib/definitions";
+import Image from 'next/image';
 
 
 export default function IngredientsList({ ingredients }: { ingredients: Ingredient[] }) {
   const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const handleclick = (ingredient: Ingredient) => {
     if (! selectedIngredients.find((i) => i.id === ingredient.id)) {
@@ -22,7 +24,9 @@ export default function IngredientsList({ ingredients }: { ingredients: Ingredie
 
   const addIngredients = async () => {
     if (selectedIngredients.length > 0) {
+      setLoading(true);
       await addIngredientsToGroceryList(selectedIngredients);
+      setLoading(false);
     }
   };
 
@@ -50,14 +54,17 @@ export default function IngredientsList({ ingredients }: { ingredients: Ingredie
           </li>
         ))}
       </ul>
-      <div className="flex items-center justify-center">
-        <button
-          className="rounded-md bg-primary p-2 font-semibold text-white w-full"
-          onClick={() => addIngredients()}
-        >
-          {selectedIngredients.length} Zutaten hinzufügen
-        </button>
-      </div>
+      <button
+        className="flex items-center justify-center rounded-md bg-primary p-2 h-10 text-center font-semibold text-white w-full disabled:bg-blue-300"
+        onClick={() => addIngredients()}
+        disabled={selectedIngredients.length === 0}
+      >
+        {isLoading ? (
+          <Image src="/icons/loading-dots-white.svg" alt="Loading" width={24} height={24} />
+        ) : (
+          <span>{selectedIngredients.length + ' Zutaten hinzufügen'}</span>
+        )}
+      </button>
     </div>
   );
 }
