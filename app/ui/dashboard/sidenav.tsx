@@ -9,7 +9,6 @@ export default function SideNav() {
     <div className="flex h-full flex-col">
       <div
         className="bg-primary p-4 md:h-40"
-        // href="/dashboard"
       >
         <div className="w-32 text-white md:w-40">
           <BillsLogo />

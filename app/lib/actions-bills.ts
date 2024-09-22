@@ -69,8 +69,8 @@ export async function createBill(prevState: State, formData: FormData) {
     };
   }
  
-  revalidatePath('/dashboard/bills');
-  redirect('/dashboard/bills');
+  revalidatePath('/bills');
+  redirect('/bills');
 }
 
 export async function updateBill(
@@ -105,9 +105,9 @@ export async function updateBill(
     return { message: 'Database Error: Failed to Update Bill.' };
   }
 
-  revalidatePath('/dashboard/bills');
-  revalidatePath('/dashboard/bills/(bill)/[id]/edit', 'page');
-  redirect('/dashboard/bills');
+  revalidatePath('/bills');
+  revalidatePath('/bills/(bill)/[id]/edit', 'page');
+  redirect('/bills');
 }
 
 export async function deleteBill(id: string) {
@@ -116,6 +116,7 @@ export async function deleteBill(id: string) {
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Bill.' };
   }
-  revalidatePath('/dashboard/bills');
-  redirect('/dashboard/bills');
+  revalidatePath('/bills');
+  revalidatePath('/bills/(bill)/[id]/edit', 'page');
+  redirect('/bills');
 }

@@ -9,7 +9,7 @@ export function CreateGroceryItem() {
   return (
     <div className="fixed bottom-16 right-4 z-50">
       <Link
-        href="/dashboard/groceries/create"
+        href="/groceries/create"
         onClick={() => { pending = true; }}
         className={clsx(
           "flex items-center rounded-full bg-primary p-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600",

@@ -37,7 +37,7 @@ export default async function BillsTable({
               return (
                 <Link
                   key={bill.id}
-                  href={`/dashboard/bills/${bill.id}/edit`}
+                  href={`/bills/${bill.id}/edit`}
                 >
                   <div
                     className="mb-2 w-full rounded-md bg-white p-3"

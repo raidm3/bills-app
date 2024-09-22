@@ -30,7 +30,7 @@ export default async function Recipe({ params }: { params: { id: string } }) {
       />
       <div className="flex justify-end my-3">
         <Link
-          href={`/dashboard/recipes/${recipe.id}/cooking`}
+          href={`/recipes/${recipe.id}/cooking`}
           className="text-primary p-2 font-medium"
         >
           Zur Zubereitung

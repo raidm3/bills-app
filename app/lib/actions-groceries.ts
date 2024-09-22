@@ -28,7 +28,7 @@ export async function deleteManyGroceryItems(ids: number[]) {
     return false;
   }
 
-  revalidatePath('/dashboard/groceries');
+  revalidatePath('/groceries');
 }
 
 export async function createGroceryItems(items: Grocery[], prevState: any, formData: FormData) {
@@ -54,8 +54,8 @@ export async function createGroceryItems(items: Grocery[], prevState: any, formD
   }
 
   if (res) {
-    revalidatePath('/dashboard/groceries');
-    redirect('/dashboard/groceries');
+    revalidatePath('/groceries');
+    redirect('/groceries');
   }
 
   return 'Grocery Items Created Successfully.';
@@ -77,7 +77,7 @@ export async function updateGroceryItem({itemId, done, favorite}: {
     data,
   });
 
-  revalidatePath('/dashboard/groceries');
+  revalidatePath('/groceries');
 }
 
 export async function updateGroceryItems(items: GroceryItem[]) {
@@ -94,7 +94,7 @@ export async function updateGroceryItems(items: GroceryItem[]) {
 
 export async function deleteGroceryItem(itemId: number) {
   await prisma.groceries.delete({ where: { id: itemId } });
-  revalidatePath('/dashboard/groceries');
+  revalidatePath('/groceries');
 }
 
 export async function addIngredientsToGroceryList(ingredients: Ingredient[]) {
@@ -112,6 +112,6 @@ export async function addIngredientsToGroceryList(ingredients: Ingredient[]) {
     console.log('Error adding ingredients:', error);
   }
 
-  revalidatePath('/dashboard/groceries');
-  redirect('/dashboard/recipes');
+  revalidatePath('/groceries');
+  redirect('/recipes');
 }

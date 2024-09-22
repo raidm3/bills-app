@@ -13,7 +13,7 @@ export default function RecipiesList({ recipes }: { recipes: any[] }) {
         {recipes.map((r) => (
           <Link
             key={r.id}
-            href={`/dashboard/recipes/${r.id}/detail`}
+            href={`/recipes/${r.id}/detail`}
             className="relative shadow-md p-2 rounded-md"
           >
             <h2 className="my-1 text-medium font-medium">{r.title}</h2>

@@ -207,7 +207,7 @@ export default function CreateBillForm({
       </div>
       <div className="mt-2 flex justify-end gap-4">
         <Link
-          href="/dashboard/bills"
+          href="/bills"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Zurück
