@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import RecipiesList from '@/app/ui/recipies/list';
 import SearchBar from '@/app/ui/recipies/search';
 import { fetchAllRecipes } from '@/app/lib/data-recipes';
+import { CreateRecipeItem } from '@/app/ui/recipies/buttons';
 
 export default async function Page({
   searchParams
@@ -23,6 +24,7 @@ export default async function Page({
       <Suspense fallback={<LoadingSkeleton />}>
         <RecipiesList recipes={recipes} />
       </Suspense>
+      <CreateRecipeItem />
     </div>
   );
 }

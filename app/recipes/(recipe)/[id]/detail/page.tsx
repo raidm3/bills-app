@@ -14,7 +14,7 @@ export default async function Recipe({ params }: { params: { id: string } }) {
     notFound();
   }
 
-  const coverImage = recipe.coverImage ?? '/images/food-cover-mobile.webp';
+  const coverImage = recipe.coverImage ?? '/images/recipe-placeholder.webp';
 
   return (
     <div>

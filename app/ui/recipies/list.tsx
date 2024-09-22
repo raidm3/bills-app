@@ -18,7 +18,7 @@ export default function RecipiesList({ recipes }: { recipes: any[] }) {
           >
             <h2 className="my-1 text-medium font-medium">{r.title}</h2>
             <Image
-              src={r.coverImage ?? '/images/food-cover-mobile.webp' }
+              src={r.coverImage ?? '/images/recipe-placeholder-mobile.webp' }
               alt={r.title}
               height={250}
               width={150}
