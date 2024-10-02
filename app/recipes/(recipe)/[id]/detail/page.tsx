@@ -14,7 +14,7 @@ export default async function Recipe({ params }: { params: { id: string } }) {
     notFound();
   }
 
-  const coverImage = recipe.coverImage ?? '/images/recipe-placeholder.webp';
+  const coverImage = recipe.coverImage?.replace('-mobile', '') ?? '/images/recipe-placeholder.webp';
 
   return (
     <div>
@@ -25,8 +25,8 @@ export default async function Recipe({ params }: { params: { id: string } }) {
         className="mb-2 rounded-md"
         src={coverImage}
         alt={recipe.title}
-        width={600}
-        height={400}
+        width={400}
+        height={300}
       />
       <div className="flex justify-end my-3">
         <Link
