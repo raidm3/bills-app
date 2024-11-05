@@ -24,7 +24,7 @@ export default async function Page({
   };
 }) {
   const year = Number(searchParams?.year) || new Date().getFullYear();
-  const month = Number(searchParams?.month) || new Date().getMonth() + 1;;
+  const month = Number(searchParams?.month) || new Date().getMonth() + 1;
   const currentPage = Number(searchParams?.page) || 1;
 
   const totalPages = await fetchBillsPages(year, month);

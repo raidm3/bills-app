@@ -9,11 +9,14 @@ const ITEMS_PER_PAGE = 10;
 
 export async function fetchBillsPages(year: number, month: number) {
   try {
+    const now = new Date(year, month-1, 1);
+    const next = new Date(year, now.getMonth()+1, 1);
+
     const count = await sql`SELECT COUNT(*)
     FROM bills
     WHERE
-        bills.date >= ${`${year}-${month}-01`}
-        AND bills.date < ${`${year}-${(month+1)%12}-01`}
+        bills.date >= ${`${now.getFullYear()}-${now.getMonth()+1}-01`}
+        AND bills.date < ${`${next.getFullYear()}-${next.getMonth()+1}-01`}
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);

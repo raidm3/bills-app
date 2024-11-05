@@ -6,8 +6,8 @@ import {
 
 export async function fetchBillsData() {
   try {
-    const year = new Date().getFullYear();
-    const month = new Date().getMonth()+1;
+    const now = new Date();
+    const next = new Date(now.getFullYear(), now.getMonth()+1, 1);
 
     const billsSumByLabel = sql`
       SELECT
@@ -16,8 +16,8 @@ export async function fetchBillsData() {
         SUM(CASE WHEN label = 'misc' THEN value ELSE 0 END) AS "misc"
       FROM bills
       WHERE
-        bills.date >= ${`${year}-${month}-01`}
-        AND bills.date < ${`${year}-${(month+1)%12}-01`}
+        bills.date >= ${`${now.getFullYear()}-${now.getMonth()+1}-01`}
+        AND bills.date < ${`${next.getFullYear()}-${next.getMonth()+1}-01`}
     `;
 
     const data = await Promise.all([
@@ -49,7 +49,7 @@ export async function fetchBillsPerMonth() {
         SUM(value) AS total_value
       FROM bills
       WHERE label IN ('food', 'dinner')
-        AND date >  CURRENT_DATE - INTERVAL '6 months'
+        AND date > CURRENT_DATE - INTERVAL '6 months'
       GROUP BY month, year, label
       ORDER BY
         month DESC, year DESC;
@@ -81,7 +81,7 @@ export async function fetchBillsDiffPerUser() {
         user_id,
         SUM(value) AS total_value
       FROM bills
-      WHERE date >  CURRENT_DATE - INTERVAL '6 months'
+      WHERE date > CURRENT_DATE - INTERVAL '6 months'
       GROUP BY month, year, user_id
       ORDER BY
         month DESC, year DESC;
@@ -112,6 +112,9 @@ export async function fetchFilteredBills(
 ) {
   const offset = (currentPage - 1) * itemsPerPage;
 
+  const now = new Date(year, month-1, 1);
+  const next = new Date(year, now.getMonth()+1, 1);
+
   try {
     const bills = await sql<BillsTable>`
       SELECT
@@ -126,8 +129,8 @@ export async function fetchFilteredBills(
       FROM bills
       JOIN users ON bills.user_id = users.id
       WHERE
-        bills.date >= ${`${year}-${month}-01`}
-        AND bills.date < ${`${year}-${(month+1)%12}-01`}
+        bills.date >= ${`${now.getFullYear()}-${now.getMonth()+1}-01`}
+        AND bills.date < ${`${next.getFullYear()}-${next.getMonth()+1}-01`}
       ORDER BY bills.created_at DESC
       LIMIT ${itemsPerPage} OFFSET ${offset}
     `;
