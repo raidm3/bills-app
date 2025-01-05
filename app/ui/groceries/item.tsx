@@ -50,7 +50,7 @@ export default function Item({ item, onItemUpdated }: { item: GroceryItem, onIte
       return;
     }
     if (deltaX > 0) {
-      handleDelete(item.id);
+      // handleDelete(item.id);
     }
     if (deltaX < 0) {
       handleFavorite(item.id);

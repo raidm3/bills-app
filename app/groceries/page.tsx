@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Shopping List',
+  title: 'Groceries',
 };
 
 export default async function Page() {

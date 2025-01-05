@@ -232,6 +232,16 @@ export function GroceryMobileSkeleton() {
           </div>
         </div>
       </div>
+      <div className="flex items-center mb-2">
+        <div className="mb-2 w-full rounded-md bg-white p-3">
+          <div className="flex justify-between">
+            <div className="flex items-center">
+              <div className="h-6 w-6 rounded-md bg-gray-200"></div>
+              <div className="h-6 w-40 rounded-md bg-gray-200 font-medium ms-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
