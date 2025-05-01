@@ -21,3 +21,13 @@ pnpm dev
 ```sh
 pnpm build
 ```
+
+# Deploy to Vercel
+
+Setup .env file with secrets from Vercel Database Setup page.
+
+```sh
+pnpm build
+npm i -g vercel
+vercel
+```

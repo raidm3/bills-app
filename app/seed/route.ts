@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { db } from '@vercel/postgres';
 import { users, bills } from '../lib/placeholder-data';
 
