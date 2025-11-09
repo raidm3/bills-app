@@ -49,10 +49,9 @@ export async function fetchBillsPerMonth() {
         SUM(value) AS total_value
       FROM bills
       WHERE label IN ('food', 'dinner')
-        AND date > CURRENT_DATE - INTERVAL '6 months'
+        AND date >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '6 months')
       GROUP BY month, year, label
-      ORDER BY
-        month DESC, year DESC;
+      ORDER BY month DESC;
     `;
 
     const options: Intl.DateTimeFormatOptions = {
@@ -81,10 +80,9 @@ export async function fetchBillsDiffPerUser() {
         user_id,
         SUM(value) AS total_value
       FROM bills
-      WHERE date > CURRENT_DATE - INTERVAL '6 months'
+      WHERE date >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '6 months')
       GROUP BY month, year, user_id
-      ORDER BY
-        month DESC, year DESC;
+      ORDER BY month DESC;
     `;
   
     const options: Intl.DateTimeFormatOptions = {

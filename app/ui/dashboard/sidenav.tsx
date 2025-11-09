@@ -14,7 +14,7 @@ export default function SideNav() {
           <BillsLogo />
         </div>
       </div>
-      <div className="flex grow flex-row justify-between md:flex-col md:space-x-0 md:space-y-2 z-50 bg-gray-50 md:px-0 md:relative fixed bottom-0 left-0 right-0">
+      <div className="flex grow flex-row justify-between md:flex-col md:space-x-0 md:space-y-2 z-50 bg-gray-50 md:px-0 md:relative fixed bottom-2 left-2 right-2">
         <NavLinks />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
         <form

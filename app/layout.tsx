@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: '%s | Bills',
     default: 'Bills',
   },
-  description: 'The official Next.js Course Dashboard, built with App Router.',
+  description: '',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
 
