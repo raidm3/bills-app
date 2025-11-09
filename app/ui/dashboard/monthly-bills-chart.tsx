@@ -23,7 +23,7 @@ export default function MonthlyBillsChart({ data }: { data: MonthlyBills[] }) {
     <div className="w-full md:col-span-4">
       <div className="rounded-xl bg-gray-50 p-2">
         <h3 className="font-medium p-2">
-          Ausgaben der letzten Monate
+          Ausgaben pro Monat
         </h3>
         <BarChart
           data={data}
@@ -36,7 +36,7 @@ export default function MonthlyBillsChart({ data }: { data: MonthlyBills[] }) {
         />
         <div className="flex items-center pb-2 pt-6">
           <CalendarIcon className="h-5 w-5 text-gray-500" />
-          <h3 className="ml-2 text-sm text-gray-500 ">Letzte 6 Monate</h3>
+          <h3 className="ml-2 text-sm text-gray-500 ">Vergangene 12 Monate</h3>
         </div>
       </div>
     </div>
