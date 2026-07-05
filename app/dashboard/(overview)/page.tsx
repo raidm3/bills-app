@@ -1,33 +1,16 @@
 import CardWrapper from '@/app/ui/dashboard/cards';
-import MonthlyBillsChart from '@/app/ui/dashboard/monthly-bills-chart';
+import MonthlyBillsChartWrapper from '@/app/ui/dashboard/monthly-bills-chart-wrapper';
 import BillDiffs from '@/app/ui/dashboard/bill-diffs';
-import { fetchBillsPerMonth } from '@/app/lib/data-bills';
 import { Suspense } from 'react';
-import { MonthlyBills, BillPerMonthAndLabel } from '@/app/lib/definitions';
 import {
   CardsSkeleton,
   MonthlyBillsChartSkeleton,
   BillDiffsSkeleton,
 } from '@/app/ui/skeletons';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
- 
-export default async function Page() {
-  const billsPerMonth: BillPerMonthAndLabel[] = await fetchBillsPerMonth();
+export const revalidate = 3600;
 
-  const data: MonthlyBills[] = billsPerMonth.reduce((acc: MonthlyBills[], { month, label, total_value }: BillPerMonthAndLabel) => {
-    const existing = acc.find(item => item.month === month);
-
-    if (existing) {
-      existing[label] = total_value;
-    } else {
-      acc.push({ month, [label]: total_value });
-    }
-
-    return acc;
-  }, []);
-
+export default function Page() {
   return (
     <main>
       <h1 className="hidden md:block mb-4 text-xl md:text-2xl">
@@ -40,7 +23,7 @@ export default async function Page() {
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
         <Suspense fallback={<MonthlyBillsChartSkeleton />}>
-          <MonthlyBillsChart data={data} />
+          <MonthlyBillsChartWrapper />
         </Suspense>
         <Suspense fallback={<BillDiffsSkeleton />}>
           <BillDiffs />

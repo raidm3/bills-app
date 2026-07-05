@@ -16,6 +16,10 @@ model bills {
   label      String    @db.VarChar(255)
   date       DateTime  @db.Date
   created_at DateTime? @db.Timestamp(6)
+
+  @@index([date])
+  @@index([created_at])
+  @@index([user_id])
 }
 
 model users {
@@ -44,6 +48,8 @@ model recipes {
   images      String?
   tags        String?
   created_at  DateTime @default(now())
+
+  @@index([created_at])
 }
 
 model ingredients {
@@ -52,4 +58,6 @@ model ingredients {
   recipe      recipes  @relation(fields: [recipeId], references: [id])
   title       String
   category    String
+
+  @@index([recipeId])
 }

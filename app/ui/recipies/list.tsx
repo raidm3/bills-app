@@ -1,5 +1,3 @@
-'use client';
-
 import Image from "next/image";
 import Link from 'next/link';
 
@@ -22,6 +20,7 @@ export default function RecipiesList({ recipes }: { recipes: any[] }) {
               alt={r.title}
               height={250}
               width={150}
+              sizes="(max-width: 768px) 50vw, 150px"
               className="object-cover w-full h-32 rounded-md"
             />
             <div

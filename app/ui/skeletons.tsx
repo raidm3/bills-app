@@ -314,3 +314,31 @@ export function LoadingSkeleton() {
     </div>
   );
 }
+
+export function FormPageSkeleton() {
+  return (
+    <div className={`${shimmer} relative w-full overflow-hidden`}>
+      <div className="h-8 w-40 rounded-md bg-gray-100 mb-4"></div>
+      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+        <div className="h-10 w-full rounded-md bg-gray-100 mb-4"></div>
+        <div className="h-10 w-full rounded-md bg-gray-100 mb-4"></div>
+        <div className="h-10 w-full rounded-md bg-gray-100 mb-4"></div>
+        <div className="h-10 w-1/2 rounded-md bg-gray-100"></div>
+      </div>
+    </div>
+  );
+}
+
+export function RecipeDetailSkeleton() {
+  return (
+    <div className={`${shimmer} relative w-full overflow-hidden`}>
+      <div className="h-8 w-48 rounded-md bg-gray-100 mb-4"></div>
+      <div className="h-56 w-full rounded-md bg-gray-100 mb-4"></div>
+      <div className="flex flex-wrap mb-4">
+        <div className="h-5 w-16 rounded-md bg-gray-100 me-2"></div>
+        <div className="h-5 w-16 rounded-md bg-gray-100 me-2"></div>
+      </div>
+      <div className="h-40 w-full rounded-md bg-gray-100"></div>
+    </div>
+  );
+}

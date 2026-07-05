@@ -1,10 +1,8 @@
 'use client';
 
 import { GroceryItem, GroceryCategory } from '@/app/lib/definitions';
-import { Suspense } from 'react';
 import Item from '@/app/ui/groceries/item';
 import { CreateGroceryItem } from './buttons';
-import { LoadingSkeleton } from '@/app/ui/skeletons';
 import { useState } from 'react';
 import Image from 'next/image';
 import { updateGroceryItems } from '@/app/lib/actions-groceries';
@@ -66,9 +64,7 @@ export default function ShoppingList({
                 {groceries?.map((item) => {
                   if (category.key === item.category) {
                     return (
-                      <Suspense key={item.id} fallback={<LoadingSkeleton />}>
-                        <Item item={item} onItemUpdated={handleItemUpdated} />
-                      </Suspense>
+                      <Item key={item.id} item={item} onItemUpdated={handleItemUpdated} />
                     );
                   }
                 })}

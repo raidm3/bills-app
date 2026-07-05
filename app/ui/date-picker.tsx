@@ -1,20 +1,20 @@
 'use client';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 export default function DatePicker() {
-  const [year, setYear] = useState<number>(new Date().getFullYear());
-  const [month, setMonth] = useState<number>(new Date().getMonth()+1);
-
-  const years = Array.from({ length: 10 }, (_, i) => i + 2024);
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
-
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+
+  const [year, setYear] = useState<number>(Number(searchParams.get('year')) || new Date().getFullYear());
+  const [month, setMonth] = useState<number>(Number(searchParams.get('month')) || new Date().getMonth()+1);
+
+  const years = Array.from({ length: 10 }, (_, i) => i + 2024);
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
   enum Months {
     Januar = 1,
@@ -31,17 +31,16 @@ export default function DatePicker() {
     Dezember,
   };
 
-  useEffect(() => {
+  const selectDate = (newYear: number, newMonth: number) => {
+    setYear(newYear);
+    setMonth(newMonth);
+
     const params = new URLSearchParams(searchParams);
     params.set('page', '1');
-    if (month) {
-      params.set('month', `${month}`);
-    }
-    if (year) {
-      params.set('year', `${year}`);
-    }
+    params.set('month', `${newMonth}`);
+    params.set('year', `${newYear}`);
     replace(`${pathname}?${params.toString()}`);
-  }, [year, month]);
+  };
 
   return (
     <div>
@@ -62,7 +61,7 @@ export default function DatePicker() {
             {years.map((year) => (
               <MenuItem key={year}>
                 <button
-                  onClick={() => setYear(year)}
+                  onClick={() => selectDate(year, month)}
                   className="block w-full px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
                 >
                   {year}
@@ -90,7 +89,7 @@ export default function DatePicker() {
             {months.map((month) => (
               <MenuItem key={Months[month]}>
                 <button
-                  onClick={() => setMonth(month)}
+                  onClick={() => selectDate(year, month)}
                   className="block w-full px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
                 >
                   {Months[month]}

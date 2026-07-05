@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import prisma from '@/app/lib/prisma';
 import { redirect } from 'next/navigation';
 import { Grocery, GroceryItem, Ingredient } from '@/app/lib/definitions';
@@ -28,6 +28,7 @@ export async function deleteManyGroceryItems(ids: number[]) {
     return false;
   }
 
+  revalidateTag('groceries');
   revalidatePath('/groceries');
 }
 
@@ -54,6 +55,7 @@ export async function createGroceryItems(items: Grocery[], prevState: any, formD
   }
 
   if (res) {
+    revalidateTag('groceries');
     revalidatePath('/groceries');
     redirect('/groceries');
   }
@@ -77,6 +79,7 @@ export async function updateGroceryItem({itemId, done, favorite}: {
     data,
   });
 
+  revalidateTag('groceries');
   revalidatePath('/groceries');
 }
 
@@ -94,6 +97,7 @@ export async function updateGroceryItems(items: GroceryItem[]) {
 
 export async function deleteGroceryItem(itemId: number) {
   await prisma.groceries.delete({ where: { id: itemId } });
+  revalidateTag('groceries');
   revalidatePath('/groceries');
 }
 
@@ -112,6 +116,7 @@ export async function addIngredientsToGroceryList(ingredients: Ingredient[]) {
     console.log('Error adding ingredients:', error);
   }
 
+  revalidateTag('groceries');
   revalidatePath('/groceries');
   redirect('/recipes');
 }

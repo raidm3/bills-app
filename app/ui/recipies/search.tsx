@@ -9,7 +9,6 @@ export default function SearchBar() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log(searchValue);
 
     const params = new URLSearchParams(searchParams);
     params.set('query', `${searchValue}`);

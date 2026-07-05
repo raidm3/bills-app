@@ -13,22 +13,20 @@ const AnimatedNumber = ({
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    let interval = 10;
-    let step = (end / duration) * interval;
+    let frame: number;
+    let start: number | null = null;
 
-    const counter = setInterval(() => {
-      setCount(prevCount => {
-        const nextCount = prevCount + step;
-        if (nextCount > end) {
-          clearInterval(counter);
-          return end;
-        }
-        return nextCount;
-      });
-    }, interval);
+    const tick = (timestamp: number) => {
+      if (start === null) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      setCount(end * progress);
+      if (progress < 1) {
+        frame = requestAnimationFrame(tick);
+      }
+    };
 
-    // Cleanup interval on component unmount
-    return () => clearInterval(counter);
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
   }, [end, duration]);
 
   return (

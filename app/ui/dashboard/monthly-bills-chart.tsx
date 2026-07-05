@@ -1,8 +1,18 @@
 'use client';
 
 import { CalendarIcon } from '@heroicons/react/24/outline';
-import { BarChart } from '@tremor/react';
+import dynamic from 'next/dynamic';
 import { MonthlyBills } from '@/app/lib/definitions';
+
+// Lazy-load the Tremor chart so recharts stays out of the dashboard's
+// critical-path bundle.
+const BarChart = dynamic(
+  () => import('@tremor/react').then((mod) => mod.BarChart),
+  {
+    ssr: false,
+    loading: () => <div className="h-80 w-full animate-pulse rounded-md bg-gray-100" />,
+  },
+);
 
 // This component is representational only.
 // For data visualization UI, check out:

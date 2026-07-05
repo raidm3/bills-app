@@ -1,22 +1,16 @@
-import { Suspense } from 'react';
 import GroceryListActions from '@/app/ui/groceries/list-actions';
 import List from '@/app/ui/groceries/list';
 import { Metadata } from 'next';
-import prisma from '@/app/lib/prisma';
-import { LoadingSkeleton } from '@/app/ui/skeletons';
+import { fetchGroceries } from '@/app/lib/data-groceries';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Groceries',
 };
 
 export default async function Page() {
-  const groceries = await prisma.groceries.findMany({
-    select: { id: true, title: true, category: true, done: true, favorite: true, created_at: true },
-    orderBy: { id: 'asc' },
-  });
+  const groceries = await fetchGroceries();
   const categories = [
     { key: 'vegetables', label: 'Obst & Gemüse'},
     { key: 'meat', label: 'Fleisch & Fisch'},
@@ -34,9 +28,7 @@ export default async function Page() {
         <h1 className="text-xl">Einkaufsliste</h1>
         <GroceryListActions itemIds={itemIds} />
       </div>
-      <Suspense fallback={<LoadingSkeleton />}>
-        <List groceries={groceries} categories={availableCategories} />
-      </Suspense>
+      <List groceries={groceries} categories={availableCategories} />
     </div>
   );
 }
