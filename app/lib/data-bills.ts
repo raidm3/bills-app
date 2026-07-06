@@ -1,10 +1,11 @@
 import { sql } from '@vercel/postgres';
+import { unstable_cache } from 'next/cache';
 import {
   BillsTable,
 } from './definitions';
 
 
-export async function fetchBillsData() {
+export const fetchBillsData = unstable_cache(async () => {
   try {
     const now = new Date();
     const next = new Date(now.getFullYear(), now.getMonth()+1, 1);
@@ -37,9 +38,9 @@ export async function fetchBillsData() {
     console.error('Database Error:', error);
     throw new Error('Failed to fetchBillsData.');
   }
-}
+}, ['fetchBillsData'], { tags: ['bills'], revalidate: 3600 });
 
-export async function fetchBillsPerMonth() {
+export const fetchBillsPerMonth = unstable_cache(async () => {
   try {
     const data = await sql`
       SELECT
@@ -69,9 +70,9 @@ export async function fetchBillsPerMonth() {
     console.error('Database Error:', error);
     throw new Error('Failed to fetchBillsPerMonth.');
   }
-}
+}, ['fetchBillsPerMonth'], { tags: ['bills'], revalidate: 3600 });
 
-export async function fetchBillsDiffPerUser() {
+export const fetchBillsDiffPerUser = unstable_cache(async () => {
   try {
     const data = await sql`
       SELECT
@@ -100,14 +101,14 @@ export async function fetchBillsDiffPerUser() {
     console.error('Database Error:', error);
     throw new Error('Failed to fetchBillsDiffPerUser.');
   }
-}
+}, ['fetchBillsDiffPerUser'], { tags: ['bills'], revalidate: 3600 });
 
-export async function fetchFilteredBills(
+export const fetchFilteredBills = unstable_cache(async (
   year: number,
   month: number,
   currentPage: number,
   itemsPerPage: number = 10,
-) {
+) => {
   const offset = (currentPage - 1) * itemsPerPage;
 
   const now = new Date(year, month-1, 1);
@@ -138,4 +139,4 @@ export async function fetchFilteredBills(
     console.error('Database Error:', error);
     throw new Error('Failed to fetchFilteredBills.');
   }
-}
+}, ['fetchFilteredBills'], { tags: ['bills'], revalidate: 3600 });

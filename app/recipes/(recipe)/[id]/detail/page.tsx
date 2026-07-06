@@ -14,7 +14,7 @@ export default async function Recipe({ params }: { params: { id: string } }) {
     notFound();
   }
 
-  const coverImage = recipe.coverImage?.replace('-mobile', '') ?? '/images/recipe-placeholder.webp';
+  const coverImage = recipe.coverImage ?? '/images/recipe-placeholder-mobile.webp';
 
   return (
     <div>
@@ -27,6 +27,8 @@ export default async function Recipe({ params }: { params: { id: string } }) {
         alt={recipe.title}
         width={400}
         height={300}
+        sizes="(max-width: 768px) 100vw, 400px"
+        priority
       />
       <div className="flex justify-end my-3">
         <Link

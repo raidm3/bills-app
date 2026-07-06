@@ -1,4 +1,5 @@
 import { sql } from '@vercel/postgres';
+import { unstable_cache } from 'next/cache';
 import {
   UserField,
   BillForm,
@@ -7,7 +8,7 @@ import {
 
 const ITEMS_PER_PAGE = 10;
 
-export async function fetchBillsPages(year: number, month: number) {
+export const fetchBillsPages = unstable_cache(async (year: number, month: number) => {
   try {
     const now = new Date(year, month-1, 1);
     const next = new Date(year, now.getMonth()+1, 1);
@@ -25,7 +26,7 @@ export async function fetchBillsPages(year: number, month: number) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of bills.');
   }
-}
+}, ['fetchBillsPages'], { tags: ['bills'], revalidate: 3600 });
 
 export async function fetchBillById(id: string) {
   try {
@@ -55,7 +56,7 @@ export async function fetchBillById(id: string) {
   }
 }
 
-export async function fetchUsers() {
+export const fetchUsers = unstable_cache(async () => {
   try {
     const data = await sql<UserField>`
       SELECT
@@ -71,4 +72,4 @@ export async function fetchUsers() {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all users.');
   }
-}
+}, ['fetchUsers'], { tags: ['users'], revalidate: 86400 });

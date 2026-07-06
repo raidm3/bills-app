@@ -1,4 +1,5 @@
 import prisma from '@/app/lib/prisma';
+import { unstable_cache } from 'next/cache';
 import { RecipeDB, Ingredient } from '@/app/lib/definitions'
 
 function formatRecipes(recipes: RecipeDB[]) {
@@ -21,41 +22,46 @@ function formatRecipe(recipe: RecipeDB | null, ingredients: Ingredient[] = []) {
   }
 }
 
+const getAllRecipes = unstable_cache(async (query: string) => {
+  return prisma.recipes.findMany({
+    where: {
+      OR: [
+        { title: { contains: query, mode: 'insensitive' } },
+        { tags: { contains: query, mode: 'insensitive' } },
+      ]
+    },
+    orderBy: { created_at: 'asc' },
+  });
+}, ['fetchAllRecipes'], { tags: ['recipes'], revalidate: 3600 });
+
 export async function fetchAllRecipes(query: string) {
   try {
-    const response = await prisma.recipes.findMany({
-      where: {
-        OR: [
-          { title: { contains: query, mode: 'insensitive' } },
-          { tags: { contains: query, mode: 'insensitive' } },
-        ]
-      },
-      orderBy: { created_at: 'asc' },
-    });
+    const response = await getAllRecipes(query);
 
     return formatRecipes(response);
   } catch (error) {
-    console.log('Error fetching recipes:', error);
+    console.error('Error fetching recipes:', error);
   }
 }
 
+const getRecipeWithIngredients = unstable_cache(async (id: number) => {
+  return Promise.all([
+    prisma.recipes.findUnique({ where: { id } }),
+    prisma.ingredients.findMany({ where: { recipeId: id } }),
+  ]);
+}, ['fetchRecipeById'], { tags: ['recipes'], revalidate: 3600 });
+
 export async function fetchRecipeById(id: number) {
   try {
-    const recipe = await prisma.recipes.findUnique({
-      where: { id },
-    });
+    const [recipe, ingredients] = await getRecipeWithIngredients(id);
 
     if (!recipe) {
       return null;
     }
 
-    const ingredients = await prisma.ingredients.findMany({
-      where: { recipeId: id },
-    });
-
     return formatRecipe(recipe, ingredients);
   } catch (error) {
-    console.log('Error fetching recipe:', error);
+    console.error('Error fetching recipe:', error);
   }
 }
 

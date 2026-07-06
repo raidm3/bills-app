@@ -20,5 +20,5 @@ export async function createRecipe(prevState: any) {
     return false;
   }
 
-  revalidatePath('/groceries');
+  revalidatePath('/recipes');
 }

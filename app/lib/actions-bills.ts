@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 const FormSchema = z.object({
@@ -69,7 +69,9 @@ export async function createBill(prevState: State, formData: FormData) {
     };
   }
  
+  revalidateTag('bills');
   revalidatePath('/bills');
+  revalidatePath('/dashboard');
   redirect('/bills');
 }
 
@@ -105,8 +107,10 @@ export async function updateBill(
     return { message: 'Database Error: Failed to Update Bill.' };
   }
 
+  revalidateTag('bills');
   revalidatePath('/bills');
   revalidatePath('/bills/(bill)/[id]/edit', 'page');
+  revalidatePath('/dashboard');
   redirect('/bills');
 }
 
@@ -116,7 +120,9 @@ export async function deleteBill(id: string) {
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Bill.' };
   }
+  revalidateTag('bills');
   revalidatePath('/bills');
   revalidatePath('/bills/(bill)/[id]/edit', 'page');
+  revalidatePath('/dashboard');
   redirect('/bills');
 }
